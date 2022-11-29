@@ -14,7 +14,7 @@ public class MainController {
 	private UtentiDao utentiRepository;
 	
 	// REGISTRAZIONE
-	@GetMapping("/registrazione") 
+	@GetMapping("/registrazione")  
 	public String registrazione() {
 			return "registrazione";
 	}
