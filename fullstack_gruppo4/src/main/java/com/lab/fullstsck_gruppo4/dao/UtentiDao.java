@@ -14,7 +14,7 @@ public interface UtentiDao extends CrudRepository <Utenti, Integer> {
 	List<Utenti> findBySesso (char sesso);
 	
 	Utenti findByIdutente(Long idutente);
-	Utenti findByIdutente5(Long idutente);
+	
 	
     //Query eventuali
 
