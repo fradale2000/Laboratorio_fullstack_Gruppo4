@@ -24,10 +24,7 @@ public class Feedback {
 	private String voto;
 	
 	private String data_feedback;
-	
-	//Date-time
-	
-	
+		
 	@ManyToOne
 	@JoinColumn(name = "idutente", nullable = false)
 	private Utenti utenti;

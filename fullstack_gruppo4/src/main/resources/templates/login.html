@@ -1,0 +1,199 @@
+<html lang="en"> 
+    <head>  
+        <title>Login Utente</title>  
+        
+    </head>  
+	<body>
+	    
+
+        <div class="container">
+        	
+	        <form action="login" method="post">  
+	            
+	               <h3>Login Utente</h3><br>
+	             
+	                    <label for="email">Email</label>
+	                    <input type="email" required="required" id="email" placeholder= "Email" name="email"></input>
+	              
+	                    <label for="password">Password</label>
+	                    <input type="password" required="required" id="password" placeholder="Password" name="password"></input> <br>
+	                      <!-- Error message -->
+				 		<div th:if="${param.error}">
+								<div class="alert"> 
+									<h5> Credenziali sbagliate </h5>
+								</div>
+							</div> 
+	                
+	              <div class="login-btn">
+	                   <button class="btn-lgn"type="submit" value="Login"> Login </button>
+	    			</div>
+	  		<br>
+	  		Non hai l'account? <a href="/registrazione">Registrati</a><br>
+	  		<a href="/forgot">Password dimenticata?</a><br>
+	  		
+	
+	        </form>  
+        </div>
+	</body>
+	
+	<!-- CSS STYLE -->
+	 	<style>
+		* {
+	    box-sizing: border-box;
+	    margin: 0;
+	    padding: 0;
+	    font-family: 'Kumbh Sans', sans-serif;
+	    scroll-behavior: smooth; 
+	}
+		.navbar {
+	    background: #001233;
+	    height: 80px;
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	    font-size: 1.2rem;
+	    position: sticky; /*  permette alla navbar di stare fermo quando si scrolla*/
+	    top: 0;
+	    z-index: 999;
+	}
+	
+	.navbar_container {
+	    display: flex;
+	    justify-content: space-between;
+	    height: 80px;
+	    z-index: 1;
+	    width: 100%;
+	    max-width: 1300px;
+	    margin: 0 auto;
+	    padding: 0 50px;
+	}
+	
+	#navbar_logo {
+	 
+	    color: #cee5f2; 
+	    display: flex;
+	    align-items: center;
+	    cursor: pointer;
+	    text-decoration: none;
+	    font-size: 2rem;
+	}
+	
+	.navbar_menu {
+	    display: flex;
+	    align-items: center;
+	    list-style: none;
+	}
+	
+	.navbar_item {
+	    height: 80px;
+	}
+	
+	.navbar_links {
+	    color: white;
+	    display: flex;
+	    align-items: center;
+	    justify-content: center;
+	    width: 125px;
+	    text-decoration: none;
+	    height: 100%;
+	}
+	
+	.navbar_btn {
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	    padding: 0 1rem;
+	    width: 100%;
+	}
+	
+	.button {
+	    color: white;
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	    text-decoration: none;
+	    padding: 10px 20px;
+	    height: 100%;
+	    width: 100%;
+	    border: none;
+	    outline: none;
+	    border-radius: 4px;
+	    background: #5c677d;
+	    transition: all 0.3s ease;
+	}
+
+	 .button:hover {
+	    color: #9518fc;
+	}
+	
+	
+	form{
+	    height: 520px;
+	    width: 400px;
+	    background-color: rgba(255,255,255,0.13);
+	    position: absolute;
+	    transform: translate(-50%,-50%);
+	    top: 50%;
+	    left: 50%;
+	    border-radius: 10px;
+	    border: 2px solid rgba(255,255,255,0.1);
+	    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+	    padding: 50px 35px;
+	}
+
+
+	form h3{
+	    font-size: 32px;
+	    font-weight: 500;
+	    line-height: 42px;
+	    text-align: center;
+	}
+	
+	label{
+	    display: block;
+	    margin-top: 30px;
+	    font-size: 16px;
+	    font-weight: 500;
+	}
+	input{
+	    display: block;
+	    height: 50px;
+	    width: 100%;
+	    background-color: rgba(255,255,255,0.07);
+	    border-radius: 3px;
+	    padding: 0 10px;
+	    margin-top: 8px;
+	    font-size: 14px;
+	    font-weight: 300;
+	}
+	::placeholder{
+	    color: #e5e5e5;
+	}
+	
+	.btn-lgn{
+	    margin-top: 30px;
+	    width: 100%;
+	    height: 60px;
+	    background-color: #536b78;
+	    color: white;
+	    font-size: 18px;
+	    border-radius: 5px;
+	    cursor: pointer;
+	    border: none;
+	}
+	
+	.login-btn {
+		display: flex;
+	}
+	
+	.alert {
+		justify-content: center;
+		background-color: red;	
+		color: white;
+		margin: 5px;
+		height: 30px;
+		text-align: center;
+		font-size: 18px;
+	}
+	</style>
+</html>

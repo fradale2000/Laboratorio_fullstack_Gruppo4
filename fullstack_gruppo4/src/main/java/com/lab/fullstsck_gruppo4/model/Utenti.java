@@ -34,7 +34,7 @@ public class Utenti {
     @NotNull(message = "Il nome deve essere inserito.")
 	private String email;
 	
-	private String password;
+	private String pwd;
 	
 	private char sesso;
 	
@@ -45,13 +45,13 @@ public class Utenti {
 	public Utenti() {}
 
 
-	public Utenti(Integer idutente, String nome, String cognome,String email, String password, char sesso) {
+	public Utenti(Integer idutente, String nome, String cognome,String email, String pwd, char sesso) {
 		
 		this.idutente = idutente;
 		this.nome = nome;
 		this.cognome = cognome;
 		this.email = email;
-		this.password = password;
+		this.pwd = pwd;
 		this.sesso = sesso;				
 	}
 
@@ -87,13 +87,15 @@ public class Utenti {
 		this.email = email;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getPwd() {
+		return pwd;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
 	}
+
 
 	public char getSesso() {
 		return sesso;

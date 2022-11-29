@@ -16,7 +16,7 @@ public class Domande {
 	@GeneratedValue(strategy=GenerationType.AUTO)
     private Integer iddomanda;
 	
-	private String domandatesto;
+	private String testo_domanda;
 	
 	@OneToMany(mappedBy = "domande")
 	private List <Domande> domande;
@@ -25,9 +25,9 @@ public class Domande {
 	public Domande() {}
 
 
-	public Domande(Integer iddomanda, String domandatesto) {
+	public Domande(Integer iddomanda, String testo_domanda) {
 		this.iddomanda = iddomanda;
-		this.domandatesto = domandatesto;
+		this.testo_domanda = testo_domanda;
 	}
 
 
@@ -41,13 +41,13 @@ public class Domande {
 	}
 
 
-	public String getDomandatesto() {
-		return domandatesto;
+	public String gettesto_domanda() {
+		return testo_domanda;
 	}
 
 
-	public void setDomandatesto(String domandatesto) {
-		this.domandatesto = domandatesto;
+	public void settesto_domanda(String testo_domanda) {
+		this.testo_domanda = testo_domanda;
 	}
 	
 	
