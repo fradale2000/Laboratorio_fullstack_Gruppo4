@@ -1,18 +1,73 @@
-<html lang="en"> 
+<html lang="en" xmlns:th="https://thymeleaf.org"> 
     <head>  
-        <title>Modulo </title>  
+        <title>Modulo Feedback </title>  
         
     </head>  
 	<body>
-	
-	<h1>Modulo</h1>
-	
-	
-	
-	Questo è il tuo modulo, compilalo
-	
-	
-	
-	
+	<h1>Modulo Feedback</h1>
+		<form action="/invio_modulo" method="post">
+			<!-- DOMANDA UNO-->
+			<h2 th:text=${domanda1.testodomanda} id ="domanda1"></h2>
+			
+			<label for="checkbox1"> Valore1 </label>
+			<input type="checkbox" id="1" name="checkbox1" value="1">
+			
+			<label for="checkbox2"> Valore2 </label>
+			<input type="checkbox" id="2" name="checkbox2" value="2">
+			
+			<label for="checkbox3"> Valore3 </label>
+			<input type="checkbox" id="3" name="checkbox3" value="3">
+			
+			<label for="checkbox4"> Valore4 </label>
+			<input type="checkbox" id="4" name="checkbox4" value="4">
+			<!-- DOMANDA DUE-->
+			<h2 th:text=${domanda2.testodomanda} id = "domanda2"></h2>
+			
+			<label for="checkbox1"> Valore1 </label>
+			<input type="checkbox" id="1" name="checkbox1" value="1">
+			
+			<label for="checkbox2"> Valore2 </label>
+			<input type="checkbox" id="2" name="checkbox2" value="2">
+			
+			<label for="checkbox3"> Valore3 </label>
+			<input type="checkbox" id="3" name="checkbox3" value="3">
+			
+			<label for="checkbox4"> Valore4 </label>
+			<input type="checkbox" id="4" name="checkbox4" value="4">
+			
+			<!-- DOMANDA TRE-->
+			<h2 th:text=${domanda3.testodomanda} id = "domanda3"></h2>
+			
+			<label for="checkbox1"> Valore1 </label>
+			<input type="checkbox" id="1" name="checkbox1" value="1">
+			
+			<label for="checkbox2"> Valore2 </label>
+			<input type="checkbox" id="2" name="checkbox2" value="2">
+			
+			<label for="checkbox3"> Valore3 </label>
+			<input type="checkbox" id="3" name="checkbox3" value="3">
+			
+			<label for="checkbox4"> Valore4 </label>
+			<input type="checkbox" id="4" name="checkbox4" value="4">
+			
+			<!-- DOMANDA QUATTRO-->
+			<h2 th:text=${domanda4.testodomanda} id = "domanda4"></h2>
+			
+			<label for="checkbox1"> Valore1 </label>
+			<input type="checkbox" id="1" name="checkbox1" value="1">
+			
+			<label for="checkbox2"> Valore2 </label>
+			<input type="checkbox" id="2" name="checkbox2" value="2">
+			
+			<label for="checkbox3"> Valore3 </label>
+			<input type="checkbox" id="3" name="checkbox3" value="3">
+			
+			<label for="checkbox4"> Valore4 </label>
+			<input type="checkbox" id="4" name="checkbox4" value="4">
+			
+			<!--INVIO MODULO-->
+			<input type="submit" value="Submit">
+		
+		</form>
 	</body>
 	</html>

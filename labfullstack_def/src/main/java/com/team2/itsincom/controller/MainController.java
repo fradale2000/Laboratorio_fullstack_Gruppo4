@@ -23,10 +23,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
-
 import com.team2.itsincom.ItsincomApplication;
+import com.team2.itsincom.Dao.DomandeDao;
 import com.team2.itsincom.Dao.UtentiDao;
 import com.team2.itsincom.model.Utenti;
+import com.team2.itsincom.model.Domande;
 import com.team2.itsincom.model.ReCaptchaResponse;
 
 
@@ -40,6 +41,9 @@ public class MainController {
 	
 	@Autowired
 	UtentiDao utenteRepository; 
+	
+	@Autowired
+	DomandeDao domandaRepository; 
 	
 	
 	//Template per codice Captcha
@@ -91,14 +95,15 @@ public class MainController {
 	}
 	
 	@RequestMapping(value = "login", method = RequestMethod.POST)
-	public String post_login(@Valid Utenti utenti, @RequestParam("email") String email, @RequestParam("pwd") String pwd, BindingResult fields) {
+	public String post_login(@Valid Utenti utenti, @RequestParam("email") String email, @RequestParam("pwd") String pwd, BindingResult fields,HttpSession session) {
 		if(fields.hasErrors()) {
 			return "login";
 		}			
 		if(utenteRepository.findByEmail(email).size()>0) {
 			// Lo studente è presente nel db			
 			Utenti utenteAttuale=utenteRepository.findByEmail(email).get(0);			
-			if(utenteAttuale.getPwd().equals(pwd)) {				
+			if(utenteAttuale.getPwd().equals(pwd)) {
+				session.setAttribute("utenteAttuale", utenteAttuale);
 				//Se la password è uguale a quella del db, entra
 				return "redirect:home/"+utenteAttuale.getIdutente();
 			}
@@ -121,9 +126,24 @@ public class MainController {
 			} 
 	
 	@GetMapping("/modulo") 
-	public String modulo() {
+	public String modulo(Model model,HttpSession session) {
 		LOGGER.info("Utente in modulo");
-		return "modulo";
+		Utenti utenteAttuale = (Utenti) session.getAttribute("utenteAttuale");
+		//scelta domanda 1
+		Domande domanda1 = domandaRepository.domanda1Random();
+		model.addAttribute("domanda1",domanda1);
+		//scelta domanda 2
+		Domande domanda2 = domandaRepository.domanda2Random(domanda1.getIddomanda());
+		model.addAttribute("domanda2",domanda2);
+		//scelta domanda 3
+		Domande domanda3 = domandaRepository.domanda3Random(domanda1.getIddomanda(),domanda2.getIddomanda());
+		model.addAttribute("domanda3",domanda3);
+		//scelta domanda 4
+		Domande domanda4 = domandaRepository.domanda4Random(domanda1.getIddomanda(),domanda2.getIddomanda(),domanda3.getIddomanda());
+		model.addAttribute("domanda4",domanda4);
 		
+		return "/modulo";
+				
 	}
+
 }
