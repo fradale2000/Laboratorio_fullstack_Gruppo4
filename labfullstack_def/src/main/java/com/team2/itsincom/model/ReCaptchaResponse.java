@@ -1,0 +1,25 @@
+package com.team2.itsincom.model;
+
+public class ReCaptchaResponse {
+private boolean success;
+public boolean isSuccess() {
+	return success;
+}
+public void setSuccess(boolean success) {
+	this.success = success;
+}
+public String getChallenge_ts() {
+	return challenge_ts;
+}
+public void setChallenge_ts(String challenge_ts) {
+	this.challenge_ts = challenge_ts;
+}
+public String getHostname() {
+	return hostname;
+}
+public void setHostname(String hostname) {
+	this.hostname = hostname;
+}
+private String challenge_ts;
+private String hostname;
+}

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.lab.fullstsck_gruppo4.dao.UtentiDao;
 @Controller
-@RequestMapping("")
+@RequestMapping
 public class MainController {
 	
 	@Autowired
@@ -18,4 +18,6 @@ public class MainController {
 	public String registrazione() {
 			return "registrazione";
 	}
+	
+	
 }

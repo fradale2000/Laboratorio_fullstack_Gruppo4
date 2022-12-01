@@ -1,36 +1,24 @@
 <!DOCTYPE html>
 <html> 
     <head>  
-        <title>Registrazione Utente</title>  
+        <title>Registrazione Studente</title>  
     	        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     	        
     	        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     </head>  
-	<body>
-				
+	<body>				
 		<!-- Form -->		
-        <div class="container">
+    	<div class="container">
 	        <form action="/registrazione" method="post">  
-	               <h3>Registrazione Utente</h3><br>	              
+	               <h3>Registrazione Studente</h3><br>	              
 	               	               
-	                    <label for="nome">Nome</label>
-	                    <input type="text" required="required" name="nome" id="nome" placeholder= "Nome" ></input>
-	                    
-	                    <label for="nome">Cognome</label>
-	                    <input type="text" required="required" name="nome" id="nome" placeholder= "Nome" ></input>
-	               
+	                   	              
 	                    <label for="email">Email</label>
 	                    <input type="email" required="required" name="email" id="email" placeholder= "Email" ></input>
 	              
 	                    <label for="password">Password</label>
 	                    <input type="password" required="required" name="pwd" id="pwd" placeholder="Password"></input> <br>
-	                	
-	                	<label for="sesso">Sesso:</label>
-  						<select name="sesso" id="sesso">
-    					<option value="M">Maschio</option>
-    					<option value="F">Femmina</option>
-    					
-  						</select>
+	                		                	    				  				
 			                <!--  Success message -->
 					  	<br>
 						<div th:if="${param.success}">
