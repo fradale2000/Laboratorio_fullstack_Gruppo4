@@ -129,6 +129,7 @@ public class MainController {
 	public String modulo(Model model,HttpSession session) {
 		LOGGER.info("Utente in modulo");
 		Utenti utenteAttuale = (Utenti) session.getAttribute("utenteAttuale");
+		//System.out.println(utenteAttuale.getIdutente());
 		//scelta domanda 1
 		Domande domanda1 = domandaRepository.domanda1Random();
 		model.addAttribute("domanda1",domanda1);
@@ -142,8 +143,23 @@ public class MainController {
 		Domande domanda4 = domandaRepository.domanda4Random(domanda1.getIddomanda(),domanda2.getIddomanda(),domanda3.getIddomanda());
 		model.addAttribute("domanda4",domanda4);
 		
-		return "/modulo";
-				
+		return "/modulo";				
 	}
 
+	@RequestMapping(value = "/invio_modulo", method = RequestMethod.POST)
+	public String invio_modulo(@Valid Utenti utenti, @RequestParam("email") String email, @RequestParam("pwd") String pwd, BindingResult fields,HttpSession session) {
+		if(fields.hasErrors()) {
+			return "login";
+		}			
+		if(utenteRepository.findByEmail(email).size()>0) {
+			// Lo studente è presente nel db			
+			Utenti utenteAttuale=utenteRepository.findByEmail(email).get(0);			
+			if(utenteAttuale.getPwd().equals(pwd)) {
+				session.setAttribute("utenteAttuale", utenteAttuale);
+				//Se la password è uguale a quella del db, entra
+				return "redirect:home/"+utenteAttuale.getIdutente();
+			}
+		}
+		return "login";
+	}
 }
