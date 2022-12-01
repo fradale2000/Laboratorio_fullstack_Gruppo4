@@ -147,9 +147,9 @@ public class MainController {
 	}
 
 	@RequestMapping(value = "/invio_modulo", method = RequestMethod.POST)
-	public String invio_modulo(@Valid Utenti utenti, @RequestParam("email") String email, @RequestParam("pwd") String pwd, BindingResult fields,HttpSession session) {
+	public String invio_modulo(@RequestParam() BindingResult fields,HttpSession session) {
 		if(fields.hasErrors()) {
-			return "login";
+			return "modulo";
 		}			
 		if(utenteRepository.findByEmail(email).size()>0) {
 			// Lo studente è presente nel db			
