@@ -237,20 +237,21 @@ public class MainController {
 	}
     
 
-	@RequestMapping(value = "/invio_modulo", method = RequestMethod.POST)
-	public String invio_modulo(@RequestParam() BindingResult fields,HttpSession session) {
-		if(fields.hasErrors()) {
-			return "modulo";
-		}			
-		if(utenteRepository.findByEmail(email).size()>0) {
+
+    // @RequestMapping(value = "/invio_modulo", method = RequestMethod.POST)
+    //	public String invio_modulo(@RequestParam() BindingResult fields,HttpSession session) {
+    	//	if(fields.hasErrors()) {
+			//	return "modulo";
+			//		}			
+		//	if(utenteRepository.findByEmail(email).size()>0) {
 			// Lo studente è presente nel db			
-			Utenti utenteAttuale=utenteRepository.findByEmail(email).get(0);			
-			if(utenteAttuale.getPwd().equals(pwd)) {
-				session.setAttribute("utenteAttuale", utenteAttuale);
+			//	Utenti utenteAttuale=utenteRepository.findByEmail(email).get(0);			
+			//		if(utenteAttuale.getPwd().equals(pwd)) {
+				//	session.setAttribute("utenteAttuale", utenteAttuale);
 				//Se la password è uguale a quella del db, entra
-				return "redirect:home/"+utenteAttuale.getIdutente();
-			}
-		}
-		return "login";
-	}
+				//	return "redirect:home/"+utenteAttuale.getIdutente();
+				//		}
+			//}
+		//	return "login";
+//	}
 }
