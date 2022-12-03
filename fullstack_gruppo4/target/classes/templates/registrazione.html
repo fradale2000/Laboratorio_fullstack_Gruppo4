@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html> 
+    <head>  
+        <title>Registrazione Utente</title>  
+    	        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    	        
+    	        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    </head>  
+	<body>
+				
+		<!-- Form -->		
+        <div class="container">
+	        <form action="/registrazione" method="post">  
+	               <h3>Registrazione Utente</h3><br>	              
+	               	               
+	                    <label for="nome">Nome</label>
+	                    <input type="text" required="required" name="nome" id="nome" placeholder= "Nome" ></input>
+	                    
+	                    <label for="nome">Cognome</label>
+	                    <input type="text" required="required" name="nome" id="nome" placeholder= "Nome" ></input>
+	               
+	                    <label for="email">Email</label>
+	                    <input type="email" required="required" name="email" id="email" placeholder= "Email" ></input>
+	              
+	                    <label for="password">Password</label>
+	                    <input type="password" required="required" name="pwd" id="pwd" placeholder="Password"></input> <br>
+	                	
+	                	<label for="sesso">Sesso:</label>
+  						<select name="sesso" id="sesso">
+    					<option value="M">Maschio</option>
+    					<option value="F">Femmina</option>
+    					
+  						</select>
+			                <!--  Success message -->
+					  	<br>
+						<div th:if="${param.success}">
+							<div class="alert-success"> Grazie per esserti registrato! </div>
+						</div>
+						
+						<br>
+						<div class="g-recaptcha"  required="required" data-sitekey="6LcmWycjAAAAABYEa6musMfmCv9iD8aylBcIAoOr"></div>
+						<div th:if="${param.error}">
+							<div class="alert-error"> Inserisci tutti i campi! </div>
+						</div>
+						
+	              <div class="login-btn">
+	                   <button class="btn-lgn"type="submit" value="Login"> Registrati </button>
+	    		</div>
+	  		<br>
+	  		Hai già l'account? <a href="/login">Accedi</a>
+	        </form>  
+        </div>
+			  
+
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+	</body>
+	
+	
+	<!-- CSS STYLE -->
+	<style>
+		* {
+	    box-sizing: border-box;
+	    margin: 0;
+	    padding: 0;
+	    font-family: 'Kumbh Sans', sans-serif;
+	    scroll-behavior: smooth; 
+	}
+		.navbar {
+	    background: #001233;
+	    height: 80px;
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	    font-size: 1.2rem;
+	    position: sticky; /*  permette alla navbar di stare fermo quando si scrolla*/
+	    top: 0;
+	    z-index: 999;
+	}
+	
+	.navbar_container {
+	    display: flex;
+	    justify-content: space-between;
+	    height: 100%;
+	    z-index: 1;
+	    width: 100%;
+	    max-width: 1300px;
+	    margin: 0 auto;
+	    padding: 0 50px;
+	}
+	
+	#navbar_logo {
+	 
+	    color: #cee5f2; 
+	    display: flex;
+	    align-items: center;
+	    cursor: pointer;
+	    text-decoration: none;
+	    font-size: 2rem;
+	}
+	
+	.navbar_menu {
+	    display: flex;
+	    align-items: center;
+	    list-style: none;
+	}
+	
+	.navbar_item {
+	    height: 80px;
+	}
+	
+	.navbar_links {
+	    color: white;
+	    display: flex;
+	    align-items: center;
+	    justify-content: center;
+	    width: 125px;
+	    text-decoration: none;
+	    height: 100%;
+	}
+	
+	.navbar_btn {
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	    padding: 0 1rem;
+	    width: 100%;
+	}
+	
+	.button {
+	    color: white;
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	    text-decoration: none;
+	    padding: 10px 20px;
+	    height: 100%;
+	    width: 100%;
+	    border: none;
+	    outline: none;
+	    border-radius: 4px;
+	    background: #5c677d;
+	    transition: all 0.3s ease;
+	}
+
+	 .button:hover {
+	    color: #9518fc;
+	}
+	
+	
+	form {
+	    height:100%;
+	    width: 400px;
+	    background-color: rgba(255,255,255,0.13);
+	    position: absolute;
+	    transform: translate(-50%,-50%);
+	    top: 65%;
+	    left: 50%;
+	    border-radius: 10px;
+	    border: 2px solid rgba(255,255,255,0.1);
+	    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+	    padding: 50px 35px;
+}
+
+
+	form h3{
+	    font-size: 32px;
+	    font-weight: 500;
+	    line-height: 42px;
+	    text-align: center;
+	}
+	
+	label{
+	    display: block;
+	    margin-top: 30px;
+	    font-size: 16px;
+	    font-weight: 500;
+	}
+	input{
+	    display: block;
+	    height: 50px;
+	    width: 100%;
+	    background-color: rgba(255,255,255,0.07);
+	    border-radius: 3px;
+	    padding: 0 10px;
+	    margin-top: 8px;
+	    font-size: 14px;
+	    font-weight: 300;
+	}
+	::placeholder{
+	    color: #e5e5e5;
+	}
+	
+	.btn-lgn{
+	    margin-top: 30px;
+	    width: 100%;
+	    height: 60px;
+	    background-color: #536b78;
+	    color: white;
+	    font-size: 18px;
+	    border-radius: 5px;
+	    cursor: pointer;
+	    border: none;
+	}
+	
+	.login-btn {
+		display: flex;
+	}
+	
+	.alert-success {
+		justify-content: center;
+		background-color: green;	
+		color: white;
+		margin: 8px;
+		height: 30px;
+		text-align: center;
+		font-size: 18px;
+	}
+	
+		.alert-error {
+		justify-content: center;
+		background-color: red;	
+		color: white;
+		margin: 8px;
+		height: 30px;
+		text-align: center;
+		font-size: 18px;
+	}
+	</style>
+</html>

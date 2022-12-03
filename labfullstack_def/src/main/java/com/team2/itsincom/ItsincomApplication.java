@@ -20,6 +20,4 @@ public class ItsincomApplication {
 		return new RestTemplate();
 	}
 	
-	
-
 }

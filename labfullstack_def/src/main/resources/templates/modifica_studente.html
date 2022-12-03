@@ -1,0 +1,40 @@
+<html lang="en"> 
+    <head>  
+        <title>Modifica studente</title>  
+    </head>  
+	<body>
+	<h1>Modifica uno studente</h1><br>
+		<form action="modifica_studente" method="post">  
+            <table>  
+                <tr>  
+                    <td>Studente</td>  
+                    <td>
+                    <select id="utenti" name="idutente">
+                    	<option th:each="u:${utenti}" th:value="${u.idutente}" th:text="${u.email}"></option>
+                    </select>
+                    </td>  
+                </tr>
+                <tr>  
+                    <td>Nome</td>  
+                    <td><input type="text" name="nome" required></input></td>  
+                </tr>
+                <tr>  
+                    <td>Cognome</td>  
+                    <td><input type="text" name="cognome" required></input></td>  
+                </tr>
+                <tr>  
+                    <td>E-mail</td>  
+                    <td><input type="email" name="email"></input></td>  
+                </tr>
+                <tr>  
+                    <td>Password</td>  
+                    <td><input type="password" name="pwd"></input></td>  
+                </tr>
+                <tr>              
+                    <td><input type="submit" value="Modifica"></input></td>  
+                </tr>                
+            </table>
+        </form>
+        <a href="menu_admin">Torna al menu admin</a> 
+	</body>
+</html>

@@ -1,0 +1,44 @@
+<html lang="en"> 
+    <head>  
+        <title>Inserimento studente</title>  
+    </head>  
+	<body>
+	<h1>Inserisci uno studente</h1><br>
+ 
+		<form action="inserisci_studente" method="post">  
+            <table>  
+                <tr>  
+                    <td><label for="nome">Nome</label></td>  
+                    <td><input type="text" name="nome" required></input></td>  
+                </tr>
+                <tr>  
+                    <td><label for="cognome">Cognome</label></td>  
+                    <td><input type="text" name="cognome" required></input></td>  
+                </tr>
+                <tr>  
+                    <td><label for="email">E-Mail</label></td>  
+                    <td><input type="text" name="email" required></input></td>  
+                </tr>
+                <tr>              
+                    <td><input type="submit" value="Inserisci"></input></td>  
+                </tr>                
+            </table>
+        </form> 
+        <hr>
+               <table>
+				<tr>
+                <th>Lista Studenti</th>   
+                </tr>
+                
+                <th:block th:each="u:${utenti}"> 
+                <tr>
+                <td th:text = "${u.getNome()}"></td>
+                <td th:text = "${u.getCognome()}"></td>
+                <td th:text = "${u.getEmail()}"></td>
+                </tr> 
+                </th:block>
+                </table>   
+           <br>
+          <a href="menu_admin">Torna al menu admin</a> 
+	</body>
+</html>

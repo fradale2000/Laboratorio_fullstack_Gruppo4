@@ -24,10 +24,6 @@ public class Utenti {
     @NotNull(message = "La e-mail deve essere inserita.")
 	private String email;
     
-    
-	
-
-
 	private String nome;
     
     
@@ -41,18 +37,21 @@ public class Utenti {
 	
 	public Utenti() {}
 
-
-	public Utenti(Integer idutente,String email, String pwd) {
-		
-		this.idutente = idutente;		
+	public Utenti(Integer idutente,String email, String nome, String cognome, String pwd) {
+		this.idutente = idutente;
 		this.email = email;
-		this.pwd = pwd;					
+		this.nome = nome;
+		this.cognome = cognome;
+		this.pwd = pwd;
 	}
 	
-	
-	public Utenti(String email) {						
-		this.email = email;						
+	public Utenti(String nome, String cognome, String email, String pwd) {
+		this.nome = nome;
+		this.cognome = cognome;
+		this.email = email;		
+		this.pwd = pwd;
 	}
+
 	
 
 	public Integer getIdutente() {
@@ -75,16 +74,13 @@ public class Utenti {
 		return nome;
 	}
 
-
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-
 	public String getCognome() {
 		return cognome;
 	}
-
 
 	public void setCognome(String cognome) {
 		this.cognome = cognome;
@@ -93,16 +89,7 @@ public class Utenti {
 		return pwd;
 	}
 
-
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
-	}
-
-
-	
-
-	
-	
-	
-	
+	}	
 }

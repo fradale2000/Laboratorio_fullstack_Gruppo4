@@ -1,0 +1,24 @@
+<html lang="en"> 
+    <head>  
+        <title>Rimozione studente</title>  
+    </head>  
+	<body>
+	<h1>Rimuovi uno studente</h1><br>
+		<form action="rimuovi_studente" method="post">  
+            <table>  
+                <tr>  
+                    <td>Studente</td>  
+                    <td>
+                    <select id="utenti" name="idutente">
+                    	<option th:each="u:${utenti}" th:value="${u.idutente}" th:text="${u.email}"></option>
+                    </select>
+                    </td>  
+                </tr>
+                <tr>              
+                    <td><input type="submit" value="Rimuovi"></input></td>  
+                </tr>                
+            </table>
+        </form>
+        <a href="menu_admin">Torna al menu admin</a> 
+	</body>
+</html>

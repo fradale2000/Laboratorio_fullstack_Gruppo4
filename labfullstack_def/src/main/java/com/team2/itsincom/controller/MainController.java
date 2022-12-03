@@ -105,6 +105,7 @@ public class MainController {
 			if(utenteAttuale.getPwd().equals(pwd)) {
 				session.setAttribute("utenteAttuale", utenteAttuale);
 				//Se la password è uguale a quella del db, entra
+				LOGGER.info("Studente loggato");
 				return "redirect:home/"+utenteAttuale.getIdutente();
 			}
 		}
@@ -145,5 +146,96 @@ public class MainController {
 		return "/modulo";
 				
 	}
+	
+	// ACCESSO ALLA PAGINA menu_admin.html
+    @RequestMapping(value = "menu_admin", method = RequestMethod.GET)
+    public String get_menu_admin() {
+    	LOGGER.info("Admin loggato");
+        return "menu_admin";
+    }
+    
+    
+    
+    // STUDENTE
+    
+    
+    // INSERIMENTO STUDENTE
+    
+    // ACCESSO ALLA PAGINA inserisci_studente.html
+    @GetMapping("inserisci_studente")
+    public ModelAndView get_inserimento_studente(Utenti utenti) {
+        ModelAndView listaUtenti=new ModelAndView();
+        listaUtenti.setViewName("inserisci_studente");
+        listaUtenti.addObject("utenti", utenteRepository.visualizzaUtenti()); 
+        LOGGER.info("Admin in inserimento");
+        return listaUtenti;
+    }
+    
+    // INSERIMENTO DI UN NUOVO STUDENTE NEL DB
+    @RequestMapping(value = "inserisci_studente", method = RequestMethod.POST)
+    public String post_inserisci_studente(@Valid Utenti utenti, @RequestParam("nome") String nome, @RequestParam("cognome") String cognome, @RequestParam("email") String email, BindingResult fields) {        
+        if(utenteRepository.findByEmail(email).size()==0) {
+            utenti = new Utenti (nome, cognome, email, null);
+            utenteRepository.save(utenti);
+            LOGGER.info("Inserimento di un studente avvenuto correttamente");
+            return "menu_admin";
+        }   
+        LOGGER.info("Inserimento non avvenuto");
+        return "inserisci_studente";            
+    }
+
+    
+    // MODIFICA STUDENTE
+    
+    // ACCESSO ALLA PAGINA modifica_studente.html
+    @GetMapping("modifica_studente")
+    public ModelAndView get_modifica_studente(Utenti utenti) {
+        ModelAndView listaUtente=new ModelAndView();
+        listaUtente.setViewName("modifica_studente");
+        listaUtente.addObject("utenti", utenteRepository.visualizzaUtenti()); 
+        LOGGER.info("Admin in modifica");
+        return listaUtente;
+    }
+    
+    // MODIFICA DI UNO STUDENTE SUL DB
+    @RequestMapping(value = "modifica_studente", method = RequestMethod.POST)
+    public String post_modifica_studente(@Valid Utenti utenti, @RequestParam("idutente") Integer idutente, @RequestParam("nome") String nome, @RequestParam("cognome") String cognome, @RequestParam("email") String email, @RequestParam("pwd") String pwd,  BindingResult fields) {
+    	if(fields.hasErrors()) {
+ 			return "redirect:/modifica_studente";
+ 		}
+    	if(pwd.equals("")) {
+    		pwd=null;
+    	}
+ 		Utenti utenteModificato=utenteRepository.findById(idutente).get();
+ 		utenteModificato.setNome(nome);
+ 		utenteModificato.setCognome(cognome);
+ 		utenteModificato.setEmail(email);
+ 		utenteModificato.setPwd(pwd);
+ 		utenteRepository.save(utenteModificato);
+ 		LOGGER.info("Utente modificato correttamente");
+        return "menu_admin";           
+	}
+    
+    
+    // RIMOZIONE STUDENTE
+    
+    // ACCESSO ALLA PAGINA rimuovi_studente.html
+    @GetMapping("rimuovi_studente")
+    public ModelAndView get_rimuovi_studente(Utenti utenti) {
+        ModelAndView listaUtenti=new ModelAndView();
+        listaUtenti.setViewName("rimuovi_studente");
+        listaUtenti.addObject("utenti",utenteRepository.visualizzaUtenti()); 
+        LOGGER.info("Admin in rimuovi");
+        return listaUtenti;
+    }
+    
+    // RIMOZIONE DI UNO STUDENTE DAL DB
+    @RequestMapping(value = "rimuovi_studente", method = RequestMethod.POST)
+    public String post_rimuovi_studente(Utenti utenti, @RequestParam("idutente") Integer idutente, BindingResult fields) {
+    	utenteRepository.deleteById(idutente);
+    	LOGGER.info("Admin ha rimosso");
+        return "menu_admin";
+	}
+    
 
 }
