@@ -7,67 +7,104 @@
 	<h1>Modulo Feedback</h1>
 		<form action="/invio_modulo" method="post">
 			<!-- DOMANDA UNO-->
-			<h2 th:text=${domanda1.testodomanda} id ="domanda1"></h2>
+			<h2 th:text=${domanda1.testodomanda} id ="domanda1" th:value = ${domanda1.iddomanda} ></h2>
 			
 			<label for="checkbox1"> Valore1 </label>
-			<input type="checkbox" id="1" name="checkbox1" value="1">
+			<input type="radio" id="domanda1_v1" name="risposte_domanda1" value="1">
 			
 			<label for="checkbox2"> Valore2 </label>
-			<input type="checkbox" id="2" name="checkbox2" value="2">
+			<input type="radio" id="domanda1_v2" name="risposte_domanda1" value="2">
 			
 			<label for="checkbox3"> Valore3 </label>
-			<input type="checkbox" id="3" name="checkbox3" value="3">
+			<input type="radio" id="domanda1_v3" name="risposte_domanda1" value="3">
 			
 			<label for="checkbox4"> Valore4 </label>
-			<input type="checkbox" id="4" name="checkbox4" value="4">
+			<input type="radio" id="domanda1_v4" name="risposte_domanda1" value="4">
 			<!-- DOMANDA DUE-->
-			<h2 th:text=${domanda2.testodomanda} id = "domanda2"></h2>
+			<h2 th:text=${domanda2.testodomanda} id = "domanda2" th:value = ${domanda2.iddomanda} ></h2>
 			
 			<label for="checkbox1"> Valore1 </label>
-			<input type="checkbox" id="1" name="checkbox1" value="1">
+			<input type="radio" id="domanda2_v1" name="risposte_domanda2" value="1">
 			
 			<label for="checkbox2"> Valore2 </label>
-			<input type="checkbox" id="2" name="checkbox2" value="2">
+			<input type="radio" id="domanda2_v2" name="risposte_domanda2" value="2">
 			
 			<label for="checkbox3"> Valore3 </label>
-			<input type="checkbox" id="3" name="checkbox3" value="3">
+			<input type="radio" id="domanda2_v3" name="risposte_domanda2" value="3">
 			
 			<label for="checkbox4"> Valore4 </label>
-			<input type="checkbox" id="4" name="checkbox4" value="4">
+			<input type="radio" id="domanda2_v4" name="risposte_domanda2" value="4">
 			
 			<!-- DOMANDA TRE-->
-			<h2 th:text=${domanda3.testodomanda} id = "domanda3"></h2>
+			<h2 th:text=${domanda3.testodomanda} id = "domanda3" th:value = ${domanda3.iddomanda} ></h2>
 			
 			<label for="checkbox1"> Valore1 </label>
-			<input type="checkbox" id="1" name="checkbox1" value="1">
+			<input type="radio" id="domanda3_v1" name="risposte_domanda3" value="1">
 			
 			<label for="checkbox2"> Valore2 </label>
-			<input type="checkbox" id="2" name="checkbox2" value="2">
+			<input type="radio" id="domanda3_v2" name="risposte_domanda3" value="2">
 			
 			<label for="checkbox3"> Valore3 </label>
-			<input type="checkbox" id="3" name="checkbox3" value="3">
+			<input type="radio" id="domanda3_v3" name="risposte_domanda3" value="3">
 			
 			<label for="checkbox4"> Valore4 </label>
-			<input type="checkbox" id="4" name="checkbox4" value="4">
+			<input type="radio" id="domanda3_v4" name="risposte_domanda3" value="4">
 			
 			<!-- DOMANDA QUATTRO-->
-			<h2 th:text=${domanda4.testodomanda} id = "domanda4"></h2>
+			<h2 th:text=${domanda4.testodomanda} id = "domanda4" th:value = ${domanda4.iddomanda} ></h2>
 			
 			<label for="checkbox1"> Valore1 </label>
-			<input type="checkbox" id="1" name="checkbox1" value="1">
+			<input type="radio" id="domanda4_v1" name="risposte_domanda4" value="1">
 			
 			<label for="checkbox2"> Valore2 </label>
-			<input type="checkbox" id="2" name="checkbox2" value="2">
+			<input type="radio" id="domanda4_v2" name="risposte_domanda4" value="2">
 			
 			<label for="checkbox3"> Valore3 </label>
-			<input type="checkbox" id="3" name="checkbox3" value="3">
+			<input type="radio" id="domanda4_v3" name="risposte_domanda4" value="3">
 			
 			<label for="checkbox4"> Valore4 </label>
-			<input type="checkbox" id="4" name="checkbox4" value="4">
+			<input type="radio" id="domanda4_v4" name="risposte_domanda4" value="4">
 			
 			<!--INVIO MODULO-->
-			<input type="submit" value="Submit">
+			<input type="submit" value="Invia Modulo" th:onclick = "invia_modulo()">
 		
 		</form>
+		<script>
+                function invia_modulo(){
+                    	
+                   //ID delle domande    
+				   let domanda1 = document.getElementById("domanda1").value;
+				   let domanda2 = document.getElementById("domanda2").value;
+				   let domanda3 = document.getElementById("domanda3").value;
+				   let domanda4 = document.getElementById("domanda4").value;
+				   //lista valori
+				   let lista_valori_domanda1 = [];
+				   let lista_valori_domanda1 = [];
+				   let lista_valori_domanda1 = [];
+				   let lista_valori_domanda1 = [];
+                   let nome = document.getElementById("nome").value;
+                   let cognome = document.getElementById("cognome").value;
+                   let data_nascita = document.getElementById("data_nascita").value;
+                   let sesso = document.getElementById("sesso").value;
+                   let idclasse = document.getElementById("idclasse").value;
+                   let username = document.getElementById("username").value;
+                   let password = document.getElementById("password").value;
+                   let con_password = document.getElementById("con_password").value;
+                   let email = document.getElementById("email").value;
+                   let numero_telefono = document.getElementById("numero_telefono").value;
+                   let indirizzo = document.getElementById("indirizzo").value;
+		                   
+											
+					                   	$.ajax({
+					                           url: "/admin/aggiunta_utente_professore?idruolo="+idruolo+"&nome="+nome+"&cognome="+cognome+"&data_nascita="+data_nascita+"&sesso="+sesso 
+					                           	+"&username="+username +"&password="+password+"&con_password="+con_password
+					                           	+"&email="+email+"&numero_telefono="+numero_telefono+"&indirizzo="+indirizzo,
+					                           type: "post",
+					                           success:function(data){
+													window.location = "/admin/professori";
+					                           }
+					                       });
+							                  
+       	</script>  
 	</body>
 	</html>
