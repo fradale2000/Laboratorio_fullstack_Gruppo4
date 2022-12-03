@@ -210,13 +210,15 @@ public class MainController {
     	System.out.println(utente.getNome());
     	ModelAndView modificaStudente=new ModelAndView();
         modificaStudente.setViewName("modifica_studente");
-       
+       //non stampa il maledetto nome
         modificaStudente.addObject("utenti", utente);
         modificaStudente.addObject("utenti", utente.getNome());
         modificaStudente.addObject("utenti", utenteRepository.visualizzaUtenti()); 
         LOGGER.info("Admin in modifica");
         return modificaStudente;
     }
+    
+    
     
    
 	
