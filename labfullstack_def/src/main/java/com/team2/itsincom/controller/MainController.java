@@ -215,7 +215,7 @@ public class MainController {
         return "menu_admin";           
 	}
     
-    
+    //Git fa schifo
     // RIMOZIONE STUDENTE
     
     // ACCESSO ALLA PAGINA rimuovi_studente.html
