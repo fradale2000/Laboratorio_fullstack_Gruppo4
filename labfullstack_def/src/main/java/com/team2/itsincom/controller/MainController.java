@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+
 import com.team2.itsincom.ItsincomApplication;
 import com.team2.itsincom.Dao.DomandeDao;
 import com.team2.itsincom.Dao.UtentiDao;
@@ -147,18 +148,32 @@ public class MainController {
 		return "/modulo";				
 	}
 	
+	
+    
+        
+ 
+    
+    // CODICE PER LE FUNZIONI DELL'ADMIN
+    
+    
+	
 	// ACCESSO ALLA PAGINA menu_admin.html
     @RequestMapping(value = "menu_admin", method = RequestMethod.GET)
     public String get_menu_admin() {
     	LOGGER.info("Admin loggato");
         return "menu_admin";
     }
-    
-        
-    // STUDENTE
-    
-    
     // INSERIMENTO STUDENTE
+    
+    
+    @GetMapping("visualizza_studente")
+    public ModelAndView get_visualizza_studente(Utenti utenti) {
+        ModelAndView listaUtenti=new ModelAndView();
+        listaUtenti.setViewName("visualizza_studente");
+        listaUtenti.addObject("utenti", utenteRepository.visualizzaUtenti());
+        return listaUtenti;
+    }
+    
     
     // ACCESSO ALLA PAGINA inserisci_studente.html
     @GetMapping("inserisci_studente")
@@ -169,6 +184,8 @@ public class MainController {
         LOGGER.info("Admin in inserimento");
         return listaUtenti;
     }
+    
+    
     
     // INSERIMENTO DI UN NUOVO STUDENTE NEL DB
     @RequestMapping(value = "inserisci_studente", method = RequestMethod.POST)
@@ -185,26 +202,37 @@ public class MainController {
 
     
     // MODIFICA STUDENTE
-    
+ 
     // ACCESSO ALLA PAGINA modifica_studente.html
-    @GetMapping("modifica_studente")
-    public ModelAndView get_modifica_studente(Utenti utenti) {
-        ModelAndView listaUtente=new ModelAndView();
-        listaUtente.setViewName("modifica_studente");
-        listaUtente.addObject("utenti", utenteRepository.visualizzaUtenti()); 
+    @RequestMapping(value ="modifica_studente/{id}" , method = RequestMethod.GET)
+    public ModelAndView get_modifica_studente(@PathVariable("id") int idutente) {
+    	Utenti utente = utenteRepository.findByIdutente(idutente);
+    	System.out.println(utente.getNome());
+    	ModelAndView modificaStudente=new ModelAndView();
+        modificaStudente.setViewName("modifica_studente");
+       
+        modificaStudente.addObject("utenti", utente);
+        modificaStudente.addObject("utenti", utente.getNome());
+        modificaStudente.addObject("utenti", utenteRepository.visualizzaUtenti()); 
         LOGGER.info("Admin in modifica");
-        return listaUtente;
+        return modificaStudente;
     }
+    
+   
+	
+    
+    
+    
+    
+    
     
     // MODIFICA DI UNO STUDENTE SUL DB
     @RequestMapping(value = "modifica_studente", method = RequestMethod.POST)
     public String post_modifica_studente(@Valid Utenti utenti, @RequestParam("idutente") Integer idutente, @RequestParam("nome") String nome, @RequestParam("cognome") String cognome, @RequestParam("email") String email, @RequestParam("pwd") String pwd,  BindingResult fields) {
     	if(fields.hasErrors()) {
- 			return "redirect:/modifica_studente";
+ 			return "redirect:/menu_admin";
  		}
-    	if(pwd.equals("")) {
-    		pwd=null;
-    	}
+    	
  		Utenti utenteModificato=utenteRepository.findById(idutente).get();
  		utenteModificato.setNome(nome);
  		utenteModificato.setCognome(cognome);
@@ -212,28 +240,20 @@ public class MainController {
  		utenteModificato.setPwd(pwd);
  		utenteRepository.save(utenteModificato);
  		LOGGER.info("Utente modificato correttamente");
-        return "menu_admin";           
+        return "visualizza_studente";           
 	}
     
-    //Git fa schifo
+ 
     // RIMOZIONE STUDENTE
     
-    // ACCESSO ALLA PAGINA rimuovi_studente.html
-    @GetMapping("rimuovi_studente")
-    public ModelAndView get_rimuovi_studente(Utenti utenti) {
-        ModelAndView listaUtenti=new ModelAndView();
-        listaUtenti.setViewName("rimuovi_studente");
-        listaUtenti.addObject("utenti",utenteRepository.visualizzaUtenti()); 
-        LOGGER.info("Admin in rimuovi");
-        return listaUtenti;
-    }
+    // Metodo per rimuovere un utente senza andare in un altra pagina
     
     // RIMOZIONE DI UNO STUDENTE DAL DB
-    @RequestMapping(value = "rimuovi_studente", method = RequestMethod.POST)
-    public String post_rimuovi_studente(Utenti utenti, @RequestParam("idutente") Integer idutente, BindingResult fields) {
-    	utenteRepository.deleteById(idutente);
-    	LOGGER.info("Admin ha rimosso");
-        return "menu_admin";
+    @RequestMapping(value = "rimuovi_studente/{id}", method = RequestMethod.GET)
+    public String post_rimuovi_studente(@PathVariable("id") Integer id) {
+    	utenteRepository.deleteById(id);
+    	LOGGER.info("Admin ha rimosso uno studente");
+        return "redirect:/visualizza_studente";
 	}
     
 

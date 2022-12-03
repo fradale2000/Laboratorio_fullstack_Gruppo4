@@ -14,6 +14,8 @@ import com.team2.itsincom.model.Utenti;
 
 public interface UtentiDao extends CrudRepository <Utenti, Integer> {
 	
+	List<Utenti> findByNome(String nome);
+	List<Utenti> findByCognome(String cognome);
 	List<Utenti> findByEmail(String email);
 	List<Utenti> findByPwd(String pwd);
 	

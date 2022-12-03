@@ -1,0 +1,36 @@
+<html lang="en"> 
+    <head>  
+        <title>Lista Studenti</title>
+        <style>
+        th{
+        	text-align: left;
+        	padding-right: 15px;
+        }
+        td{
+            padding-right: 15px;
+        }
+    	</style>
+    </head>  
+	<body>
+		<h1>Lista Studenti</h1><br>
+		<table>  
+		    <tr> 
+		        <th>Nome</th>
+		        <th>Cognome</th>
+		        <th>E-mail</th>
+		        <th></th>
+		        
+		    </tr>
+		    <th:block th:each="u:${utenti}">
+			    <tr> 
+			    	<td th:text="${u.nome}"></td>
+			    	<td th:text="${u.cognome}"></td>
+			    	<td th:text="${u.email}"></td>
+			    	<td th:text="${u.pwd}"></td>			     
+			        <td><a th:href="@{'modifica_studente/' + ${u.getIdutente()}}">Modifica</a></td>
+	         		<td><a th:href="@{'rimuovi_studente/' + ${u.getIdutente()}}">Rimuovi</a></td>
+			    </tr>
+		    </th:block>
+		</table>
+	</body>
+</html>

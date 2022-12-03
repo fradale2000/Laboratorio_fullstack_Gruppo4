@@ -19,7 +19,7 @@ public class Utenti {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer idutente;
+    public Integer idutente;
 			
     @NotNull(message = "La e-mail deve essere inserita.")
 	private String email;

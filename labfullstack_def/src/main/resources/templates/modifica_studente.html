@@ -3,10 +3,13 @@
         <title>Modifica studente</title>  
     </head>  
 	<body>
-	<h1>Modifica uno studente</h1><br>
-		<form action="modifica_studente" method="post">  
+	<h1>Modifica studente</h1><br>
+		<form th:action="@{/modifica_studente}" th:object="${utenti}" method="post">  
+            <input type="hidden" name="idutente" value="*{idutente}"></input>
             <table>  
-                <tr>  
+                <tr> 
+                
+                   <h2 th:text=${u.nome}></h2> 
                     <td>Studente</td>  
                     <td>
                     <select id="utenti" name="idutente">
@@ -15,8 +18,10 @@
                     </td>  
                 </tr>
                 <tr>  
-                    <td>Nome</td>  
-                    <td><input type="text" name="nome" required></input></td>  
+           
+                
+                    <td>Nome</td>                  
+              <td><input type="text" name="nome" required placeholder=></input></td>  
                 </tr>
                 <tr>  
                     <td>Cognome</td>  
