@@ -25,9 +25,11 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 import com.team2.itsincom.ItsincomApplication;
 import com.team2.itsincom.Dao.DomandeDao;
+import com.team2.itsincom.Dao.FeedbackDao;
 import com.team2.itsincom.Dao.UtentiDao;
 import com.team2.itsincom.model.Utenti;
 import com.team2.itsincom.model.Domande;
+import com.team2.itsincom.model.Feedback;
 import com.team2.itsincom.model.ReCaptchaResponse;
 
 
@@ -43,7 +45,10 @@ public class MainController {
 	UtentiDao utenteRepository; 
 	
 	@Autowired
-	DomandeDao domandaRepository; 
+	DomandeDao domandaRepository;
+	
+	@Autowired
+	FeedbackDao feedbackRepository; 
 	
 	
 	//Template per codice Captcha
@@ -153,8 +158,14 @@ public class MainController {
 									@RequestParam("iddomanda3") int iddomanda3,@RequestParam("iddomanda4") int iddomanda4,
 									@RequestParam("risposta1") int risposta1,@RequestParam("risposta2") int risposta2,
 									@RequestParam("risposta3") int risposta3,@RequestParam("risposta4") int risposta4,
-									HttpSession session,Model model) {
+									HttpSession session) {
 		Utenti utenteAttuale = (Utenti) session.getAttribute("utenteAttuale");
+		feedbackRepository.aggiuntaFeedback(risposta1, utenteAttuale.getIdutente(), iddomanda1);
+		feedbackRepository.aggiuntaFeedback(risposta2, utenteAttuale.getIdutente(), iddomanda2);
+		feedbackRepository.aggiuntaFeedback(risposta3, utenteAttuale.getIdutente(), iddomanda3);
+		feedbackRepository.aggiuntaFeedback(risposta4, utenteAttuale.getIdutente(), iddomanda4);
+		LOGGER.info("Feedback salvato");
+		
 		
 	}
 	
