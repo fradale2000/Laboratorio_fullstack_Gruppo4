@@ -211,8 +211,11 @@ public class MainController {
     	ModelAndView modificaStudente=new ModelAndView();
         modificaStudente.setViewName("modifica_studente");
        //non stampa il maledetto nome
+        
         modificaStudente.addObject("utenti", utente);
-        modificaStudente.addObject("utenti", utente.getNome());
+        
+        modificaStudente.addObject("u", utente.getNome());
+        
         modificaStudente.addObject("utenti", utenteRepository.visualizzaUtenti()); 
         LOGGER.info("Admin in modifica");
         return modificaStudente;
@@ -241,6 +244,8 @@ public class MainController {
  		LOGGER.info("Utente modificato correttamente");
         return "visualizza_studente";           
 	}
+    
+    
     
  
     // RIMOZIONE STUDENTE
