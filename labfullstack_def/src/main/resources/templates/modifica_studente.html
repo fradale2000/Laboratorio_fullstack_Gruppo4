@@ -8,8 +8,12 @@
             <input type="hidden" name="idutente" value="*{idutente}"></input>
             <table>  
                 <tr> 
-                
-                   <h2 th:text=${u}></h2> 
+                   <h2>Stai modificando il seguente studente</h2>
+                   <h3>Nome:</h3> <p th:text=${nomestudente}><p> 
+                   <h3>Cognome: </h3> <p th:text=${cognomestudente}><p> 
+                  <h3> Email:  </h3><p th:text=${emailstudente}><p> 
+                  <h3> Password: </h3> <p th:text=${pwdstudente}><p> 
+                   
                     <td>Studente</td>  
                     <td>
                     <select id="utenti" name="idutente">
@@ -29,7 +33,7 @@
                 </tr>
                 <tr>  
                     <td>E-mail</td>  
-                    <td><input type="email" name="email"></input></td>  
+                    <td><input type="email" name="email" required></input></td>  
                 </tr>
                 <tr>  
                     <td>Password</td>  

@@ -213,7 +213,10 @@ public class MainController {
        //non stampa il maledetto nome
         
         modificaStudente.addObject("utenti", utente);        
-        modificaStudente.addObject("u", utente.getNome());        
+        modificaStudente.addObject("nomestudente", utente.getNome());
+        modificaStudente.addObject("cognomestudente", utente.getCognome()); 
+        modificaStudente.addObject("emailstudente", utente.getEmail()); 
+        modificaStudente.addObject("pwdstudente", utente.getPwd()); 
         modificaStudente.addObject("utenti", utenteRepository.visualizzaUtenti()); 
         LOGGER.info("Admin in modifica");
         return modificaStudente;
@@ -221,11 +224,8 @@ public class MainController {
     
     
     
-   
-	
-    
+      
        
-    
     // MODIFICA DI UNO STUDENTE SUL DB
     @RequestMapping(value = "modifica_studente", method = RequestMethod.POST)
     public String post_modifica_studente(@Valid Utenti utenti, @RequestParam("idutente") Integer idutente, @RequestParam("nome") String nome, @RequestParam("cognome") String cognome, @RequestParam("email") String email, @RequestParam("pwd") String pwd,  BindingResult fields) {
