@@ -212,10 +212,8 @@ public class MainController {
         modificaStudente.setViewName("modifica_studente");
        //non stampa il maledetto nome
         
-        modificaStudente.addObject("utenti", utente);
-        
-        modificaStudente.addObject("u", utente.getNome());
-        
+        modificaStudente.addObject("utenti", utente);        
+        modificaStudente.addObject("u", utente.getNome());        
         modificaStudente.addObject("utenti", utenteRepository.visualizzaUtenti()); 
         LOGGER.info("Admin in modifica");
         return modificaStudente;
