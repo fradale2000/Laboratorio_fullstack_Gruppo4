@@ -267,7 +267,7 @@ public class MainController {
 		}
 		model.addAttribute("listapercentuali",listapercentuali);
 		
-		return "/reportfeedbacks";				
+		return "reportfeedbacks";				
 	}
 	
 	

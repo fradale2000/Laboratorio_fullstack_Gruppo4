@@ -61,7 +61,7 @@
            <p class="has-text-centered"> <strong>N</strong>= Nome &nbsp&nbsp<strong>C</strong>= Cognome &nbsp&nbsp <strong>E</strong>= Email </p>
             <br>
               <br> 
-            <div class="columns  is-centered">   
+            <div class="columns  is-mobile is-centered">   
             <table class="table is-hoverable is-narrow-mobile">
               <tr class="is-selected has-background-link is-fullwidth">
                 <th>N</th>
@@ -71,9 +71,10 @@
               
               <th:block th:each="u:${utenti}"> 
         <tr>
-          <td th:text = "${u.getNome()}"></td>
-          <td th:text = "${u.getCognome()}"></td>
-      <td th:text = "${u.getEmail()}"><small></small></td>
+          <td> <small th:text = "${u.getNome()}"> </small></td>
+          <td> <small th:text = "${u.getCognome()}"></small></td>
+      
+      	<td> <small th:text="${u.getEmail}"></small> </td>
         </tr> 
         </th:block> 
              
