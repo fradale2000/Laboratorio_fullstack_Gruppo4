@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.security.MessageDigest;
@@ -34,6 +35,7 @@ import com.team2.itsincom.Dao.UtentiDao;
 import com.team2.itsincom.model.Utenti;
 import com.team2.itsincom.model.Domande;
 import com.team2.itsincom.model.Feedback;
+import com.team2.itsincom.model.PercFeedback;
 import com.team2.itsincom.model.ReCaptchaResponse;
 
 
@@ -195,9 +197,75 @@ public class MainController {
 		LOGGER.info("Admin in reportfeedbacks");
 		//prendo tutte le domande e le stampo nell'html
 		List <Domande> listadomande = domandaRepository.listadomande();
-		
-		// calcolo la percentuale 
-		
+		//lista da far visualizzare nell'HTML
+		List <PercFeedback> listapercentuali = new ArrayList<>();
+		for (int i = 0; i < listadomande.size(); i++) {
+			Domande domandacorrente = listadomande.get(i);
+			PercFeedback percentuali = new PercFeedback();
+			percentuali.setTestodomanda(domandacorrente.getTestodomanda());
+			//prendo tuttle le risposte alla determinata domanda
+			int nrisposte = feedbackRepository.numeroRisposteadomanda(domandacorrente.getIddomanda());
+			percentuali.setNrisposte(nrisposte);
+			//prendo il determinato voto della determinata domanda
+			int voto_1 = feedbackRepository.numeroVotiperdomanda(domandacorrente.getIddomanda(), 1);
+			int voto_2 = feedbackRepository.numeroVotiperdomanda(domandacorrente.getIddomanda(), 2);
+			int voto_3 = feedbackRepository.numeroVotiperdomanda(domandacorrente.getIddomanda(), 3);
+			int voto_4 = feedbackRepository.numeroVotiperdomanda(domandacorrente.getIddomanda(), 4);
+			//calcolo la percentuale dei voti per domanda
+			if (voto_1 == 0) {
+				int percvoto1 = 0;
+				model.addAttribute("perc_v_1",percvoto1);
+				percentuali.setPerc_voto_1(percvoto1);
+			} else {
+				int percvoto1 = (100 * voto_1)/nrisposte;
+				percentuali.setPerc_voto_1(percvoto1);
+			}
+			
+			if (voto_2 == 0) {
+				int percvoto2 = 0;
+				percentuali.setPerc_voto_2(percvoto2);
+			} else {
+				int percvoto2 = (100 * voto_2)/nrisposte;
+				percentuali.setPerc_voto_2(percvoto2);
+			}
+			
+			if (voto_3 == 0) {
+				int percvoto3 = 0;
+				percentuali.setPerc_voto_3(percvoto3);
+			} else {
+				int percvoto3 = (100 * voto_3)/nrisposte;
+				percentuali.setPerc_voto_3(percvoto3);
+			}
+			
+			if (voto_4 == 0) {
+				int percvoto4 = 0;
+				percentuali.setPerc_voto_4(percvoto4);
+			} else {
+				int percvoto4 = (100 * voto_4)/nrisposte;
+				percentuali.setPerc_voto_4(percvoto4);
+			}	
+			//calcolo media
+			int media = ((1 *voto_1) + (2 *voto_2) + (3 *voto_3) + (4 *voto_4) )/nrisposte;
+			System.out.println(media);
+			switch (media) {
+			case 1:
+				percentuali.setMedia("NON SODDISFATTI");
+				break;
+			case 2:
+				percentuali.setMedia("POCO SODDISFATTI");
+				break;
+			case 3:
+				percentuali.setMedia("ABBASTANZA SODDISFATTI");
+				break;
+			case 4:
+				percentuali.setMedia("MOLTO SODDISFATTI");
+				break;
+			default:
+				percentuali.setMedia("Non calcolabile");
+			}
+			listapercentuali.add(percentuali);
+		}
+		model.addAttribute("listapercentuali",listapercentuali);
 		
 		return "/reportfeedbacks";				
 	}

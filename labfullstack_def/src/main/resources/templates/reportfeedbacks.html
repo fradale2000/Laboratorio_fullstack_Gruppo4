@@ -1,0 +1,26 @@
+<html lang="en" xmlns:th="https://thymeleaf.org"> 
+    <head>  
+    	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <title>Report Feedback </title>  
+        
+    </head>  
+	<body>
+	<h1>Report Feedback</h1>
+		<th:block th:each="percentuali:${listapercentuali}">
+ 			<h2 th:text=${percentuali.testodomanda}   ></h2>
+			
+			<label for = "v_1">NON SODDIFATTO</label>
+			<p id="v_1" th:text= "${percentuali.perc_voto_1 + '%'}" ></p>
+			<p>POCO SODDIFATTO</p>
+			<p id="v_2" th:text= "${percentuali.perc_voto_2 + '%'}" ></p>
+			<p>ABBASTANZA SODDIFATTO</p>
+			<p id="v_3" th:text= "${percentuali.perc_voto_3 + '%'}" ></p>
+			<p>MOLTO SODDIFATTO</p>
+			<p id="v_4" th:text= "${percentuali.perc_voto_4 + '%'}" ></p>
+			<p id="media" th:text= "${'Gli utenti sono mediamente '+ percentuali.media + ' su '+ percentuali.nrisposte + ' risposte'}" ></p>	 
+
+			
+		</th:block>
+			
+	</body>
+	</html>
