@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Random;
 import java.security.MessageDigest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -148,6 +149,7 @@ public class MainController {
 				}
 			} 
 	
+	// MODULO
 	@GetMapping("/modulo") 
 	public String modulo(Model model,HttpSession session) {
 		LOGGER.info("Utente in modulo");
@@ -169,6 +171,8 @@ public class MainController {
 		return "/modulo";				
 	}
 	
+	//INVIO MODULO
+	
 	@RequestMapping(value="invio_modulo", method=RequestMethod.POST)
 	@ResponseBody
 	public void AggiuntaStudente(@RequestParam("iddomanda1") int iddomanda1,@RequestParam("iddomanda2") int iddomanda2,
@@ -182,9 +186,22 @@ public class MainController {
 		feedbackRepository.aggiuntaFeedback(risposta3, utenteAttuale.getIdutente(), iddomanda3);
 		feedbackRepository.aggiuntaFeedback(risposta4, utenteAttuale.getIdutente(), iddomanda4);
 		LOGGER.info("Feedback salvato");
-		
-		
 	}
+	
+	//REPORT FEEDBACKS
+	
+	@GetMapping("/reportfeedbacks") 
+	public String reportfeedbacks(Model model,HttpSession session) {
+		LOGGER.info("Admin in reportfeedbacks");
+		//prendo tutte le domande e le stampo nell'html
+		List <Domande> listadomande = domandaRepository.listadomande();
+		
+		// calcolo la percentuale 
+		
+		
+		return "/reportfeedbacks";				
+	}
+	
 	
 	
     
@@ -259,10 +276,7 @@ public class MainController {
         LOGGER.info("Admin in modifica");
         return modificaStudente;
     }
-    
-    
-    
-      
+          
        
     // MODIFICA DI UNO STUDENTE SUL DB
     @RequestMapping(value = "modifica_studente", method = RequestMethod.POST)

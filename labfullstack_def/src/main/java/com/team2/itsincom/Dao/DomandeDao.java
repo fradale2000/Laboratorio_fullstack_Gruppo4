@@ -24,6 +24,10 @@ public interface DomandeDao extends CrudRepository <Domande, Integer> {
 	//scelta randomica della domanda 4
 	@Query(value="SELECT * FROM domande where iddomanda not in (:iddomanda1,:iddomanda2,:iddomanda3)  ORDER BY RAND() LIMIT 1 ;",nativeQuery = true)
 	public Domande domanda4Random(int iddomanda1,int iddomanda2,int iddomanda3);
+	//prendo tutte le domande
+	@Query(value="SELECT * FROM domande;",nativeQuery = true)
+	public List <Domande> listadomande();
+	
 	
 }
 
