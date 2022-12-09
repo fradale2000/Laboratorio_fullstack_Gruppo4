@@ -16,13 +16,7 @@
       <div class="container has-text-centered">
         <h3 class="title has-text-white"> Modifica uno studente </h3>
         <hr class="login-hr">
-        <p class="subtitle has-text-white">Stai modificando le seguenti credenziali:</p>
-        
-        <p> Nome: <strong th:text="${nomestudente}"></strong></p>
-        <h3> Cognome: <strong th:text="${cognomestudente}"></strong></h3>
-        <h3> Email: <strong th:text="${emailstudente}"></strong></h3>
-        <h3> Password: <strong th:text="${pwdstudente}"></strong></h3>
-       
+        <p class="subtitle has-text-white">Riempi i campi</p>                     
       </div>
     </div>
   </section>
@@ -39,16 +33,16 @@
               <input type="hidden" name="idutente" ></input> 
               
                         
-<!--               <div class="field"> -->
-<!--                 <label for="" class="label">Seleziona</label>  -->
-<!--                 </div> -->
-<!--              <div class="select is-link">    -->
-<!--               <select id="utenti" name="idutente"> -->
-<!--                 <option th:each="u:${utenti}" th:value="${u.idutente}" th:text="${u.email}"></option> -->
-<!--               </select> -->
-<!--             </div> -->
+              <div class="field">
+                <label for="" class="label">Seleziona</label> 
+                </div>
+             <div class="select is-link">   
+              <select id="utenti" name="idutente">
+                <option th:each="u:${utenti}" th:value="${u.idutente}" th:text="${u.email}"></option>
+              </select>
+            </div>
               <br>
-  
+  				<h1 text:value="${u.idutente}"></h1>
               <div class="field">
                 <label for="" class="label">Nome</label>                
                     <input type="text" id="nome" name="nome" th:value="${nomestudente}" class="input" >                    

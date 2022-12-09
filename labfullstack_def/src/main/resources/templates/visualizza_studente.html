@@ -1,36 +1,82 @@
-<html lang="en"> 
-    <head>  
-        <title>Lista Studenti</title>
-        <style>
-        th{
-        	text-align: left;
-        	padding-right: 15px;
-        }
-        td{
-            padding-right: 15px;
-        }
-    	</style>
-    </head>  
-	<body>
-		<h1>Lista Studenti</h1><br>
-		<table>  
-		    <tr> 
-		        <th>Nome</th>
-		        <th>Cognome</th>
-		        <th>E-mail</th>
-		        <th></th>
-		        
-		    </tr>
-		    <th:block th:each="u:${utenti}">
-			    <tr> 
-			    	<td th:text="${u.nome}"></td>
-			    	<td th:text="${u.cognome}"></td>
-			    	<td th:text="${u.email}"></td>
-			    	<td th:text="${u.pwd}"></td>			     
-			        <td><a th:href="@{'modifica_studente/' + ${u.getIdutente()}}">Modifica</a></td>
-	         		<td><a th:href="@{'rimuovi_studente/' + ${u.getIdutente()}}">Rimuovi</a></td>
-			    </tr>
-		    </th:block>
-		</table>
-	</body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <script src="https://kit.fontawesome.com/03b6de6df8.js" crossorigin="anonymous"></script>
+    <title>Registro studenti</title>
+</head>
+<body>
+
+   <!-- Parte css per l'intestazione-->
+  <section class="hero is-link is-bold">
+    <div class="hero-body">
+      <div class="container has-text-centered">
+        <h3 class="title has-text-white"> Registro elettronico </h3>
+        <hr class="login-hr">
+        <p class="subtitle has-text-white">Clicca per modificare o rimuovere</p>            
+      </div>
+    </div>
+  </section>
+
+   <!-- Parte css per il form che quindi è da moficare con le robe di thyme-leaf, da aggiungere name e id-->
+  <section class="hero is-light ">       
+    <div class="hero-body">               
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-5-tablet is-4-desktop is-3-widescreen">  
+ 
+            
+              <p class="has-text-black has-text-centered"><a href="/menu_admin" ><u> Torna indietro </u> </a> <br><br> <p>                         
+              <!--  Bottone -->
+              </form>
+          </div>
+           
+        </div>
+        
+      </div>
+      <h3 class="title has-text-black has-text-centered"> Registro elettronico </h3>
+      
+      
+        <div class="columns is-centered">
+      <table class="table is-hoverable">
+        
+        
+        <tr class="is-selected has-background-link">
+            <th>Nome</th>
+            <th>Cognome</th>
+            <th>E-mail</th>
+            <th>Password</th>
+            <th class="has-text-link">.</th>
+            <th class="has-text-link">.</th>
+        </tr>
+        <th:block th:each="u:${utenti}"> 
+        <tr>
+            
+            <td th:text = "${u.nome}"></td>
+            <td th:text = "${u.cognome}"></td>
+            <td th:text = "${u.email}"></td>
+            <td th:text = "${u.pwd}"></td>
+            <td><strong><a th:href="@{'modifica_studente/' + ${u.getIdutente()}}">Modifica</strong></a></td>
+	        <td><strong><a th:href="@{'rimuovi_studente/' + ${u.getIdutente()}}">Rimuovi</strong></a></td>
+        </tr> 
+        </th:block>
+        </table> 
+       </div> 
+    </div>
+  </section>
+      
+   <!-- Footer -->
+    <section class="hero is-light is-bold">
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <h4 class="title is-5 has-text-info">Registro Elettronico</h4>
+          <p> by Cecilia Baccolo, Samira Boutabt, Francesco D'Alessandro, Mohamed Osman<br> Emit Feltrinelli, 2022 </p>
+        </div>
+      </div>
+    </section>
+    
+</body>
 </html>
