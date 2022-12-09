@@ -249,17 +249,17 @@ public class MainController {
 			System.out.println(media);
 			switch (media) {
 			case 1:
-				System.out.println("la media è "+media);
-				percentuali.setMedia("NON SODDISFATTO");
+				percentuali.setMedia("NON SODDISFATTI");
+				break;
 			case 2:
-				System.out.println("la media è "+media);
-				percentuali.setMedia("POCO SODDISFATTO");
+				percentuali.setMedia("POCO SODDISFATTI");
+				break;
 			case 3:
-				System.out.println("la media è "+media);
-				percentuali.setMedia("QUASI SODDISFATTO");
+				percentuali.setMedia("ABBASTANZA SODDISFATTI");
+				break;
 			case 4:
-				System.out.println("la media è "+media);
-				percentuali.setMedia("MOLTO SODDISFATTO");
+				percentuali.setMedia("MOLTO SODDISFATTI");
+				break;
 			default:
 				percentuali.setMedia("Non calcolabile");
 			}
