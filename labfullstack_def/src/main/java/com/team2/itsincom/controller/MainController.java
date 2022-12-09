@@ -22,15 +22,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 
-
 import com.team2.itsincom.Dao.DomandeDao;
+import com.team2.itsincom.Dao.FeedbackDao;
 import com.team2.itsincom.Dao.UtentiDao;
 import com.team2.itsincom.model.Utenti;
 import com.team2.itsincom.model.Domande;
+import com.team2.itsincom.model.Feedback;
 import com.team2.itsincom.model.ReCaptchaResponse;
 
 
@@ -46,7 +48,10 @@ public class MainController {
 	UtentiDao utenteRepository; 
 	
 	@Autowired
-	DomandeDao domandaRepository; 
+	DomandeDao domandaRepository;
+	
+	@Autowired
+	FeedbackDao feedbackRepository; 
 	
 	
 	//Template per codice Captcha
@@ -164,6 +169,23 @@ public class MainController {
 		return "/modulo";				
 	}
 	
+	@RequestMapping(value="invio_modulo", method=RequestMethod.POST)
+	@ResponseBody
+	public void AggiuntaStudente(@RequestParam("iddomanda1") int iddomanda1,@RequestParam("iddomanda2") int iddomanda2,
+									@RequestParam("iddomanda3") int iddomanda3,@RequestParam("iddomanda4") int iddomanda4,
+									@RequestParam("risposta1") int risposta1,@RequestParam("risposta2") int risposta2,
+									@RequestParam("risposta3") int risposta3,@RequestParam("risposta4") int risposta4,
+									HttpSession session) {
+		Utenti utenteAttuale = (Utenti) session.getAttribute("utenteAttuale");
+		feedbackRepository.aggiuntaFeedback(risposta1, utenteAttuale.getIdutente(), iddomanda1);
+		feedbackRepository.aggiuntaFeedback(risposta2, utenteAttuale.getIdutente(), iddomanda2);
+		feedbackRepository.aggiuntaFeedback(risposta3, utenteAttuale.getIdutente(), iddomanda3);
+		feedbackRepository.aggiuntaFeedback(risposta4, utenteAttuale.getIdutente(), iddomanda4);
+		LOGGER.info("Feedback salvato");
+		
+		
+	}
+	
 	
     
         
@@ -277,20 +299,5 @@ public class MainController {
     
 
 
-    // @RequestMapping(value = "/invio_modulo", method = RequestMethod.POST)
-    //	public String invio_modulo(@RequestParam() BindingResult fields,HttpSession session) {
-    	//	if(fields.hasErrors()) {
-			//	return "modulo";
-			//		}			
-		//	if(utenteRepository.findByEmail(email).size()>0) {
-			// Lo studente è presente nel db			
-			//	Utenti utenteAttuale=utenteRepository.findByEmail(email).get(0);			
-			//		if(utenteAttuale.getPwd().equals(pwd)) {
-				//	session.setAttribute("utenteAttuale", utenteAttuale);
-				//Se la password è uguale a quella del db, entra
-				//	return "redirect:home/"+utenteAttuale.getIdutente();
-				//		}
-			//}
-		//	return "login";
-//	}
+    
 }

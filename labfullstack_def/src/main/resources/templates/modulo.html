@@ -1,13 +1,14 @@
 <html lang="en" xmlns:th="https://thymeleaf.org"> 
     <head>  
+    	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
         <title>Modulo Feedback </title>  
         
     </head>  
 	<body>
 	<h1>Modulo Feedback</h1>
-		<form action="/invio_modulo" method="post">
 			<!-- DOMANDA UNO-->
-			<h2 th:text=${domanda1.testodomanda} id ="domanda1" th:value = ${domanda1.iddomanda} ></h2>
+ 			<h2 th:text=${domanda1.testodomanda}   ></h2> 
+			<p hidden id = "domanda1"  th:text = ${domanda1.iddomanda} ></p>
 			
 			<label for="checkbox1"> Valore1 </label>
 			<input type="radio" id="domanda1_v1" name="risposte_domanda1" value="1">
@@ -21,7 +22,8 @@
 			<label for="checkbox4"> Valore4 </label>
 			<input type="radio" id="domanda1_v4" name="risposte_domanda1" value="4">
 			<!-- DOMANDA DUE-->
-			<h2 th:text=${domanda2.testodomanda} id = "domanda2" th:value = ${domanda2.iddomanda} ></h2>
+			<h2 th:text=${domanda2.testodomanda} ></h2>
+			<p hidden id = "domanda2"  th:text = ${domanda2.iddomanda} ></p>
 			
 			<label for="checkbox1"> Valore1 </label>
 			<input type="radio" id="domanda2_v1" name="risposte_domanda2" value="1">
@@ -36,7 +38,8 @@
 			<input type="radio" id="domanda2_v4" name="risposte_domanda2" value="4">
 			
 			<!-- DOMANDA TRE-->
-			<h2 th:text=${domanda3.testodomanda} id = "domanda3" th:value = ${domanda3.iddomanda} ></h2>
+			<h2 th:text=${domanda3.testodomanda}></h2>
+			<p hidden id = "domanda3"  th:text = ${domanda3.iddomanda} ></p>
 			
 			<label for="checkbox1"> Valore1 </label>
 			<input type="radio" id="domanda3_v1" name="risposte_domanda3" value="1">
@@ -51,7 +54,8 @@
 			<input type="radio" id="domanda3_v4" name="risposte_domanda3" value="4">
 			
 			<!-- DOMANDA QUATTRO-->
-			<h2 th:text=${domanda4.testodomanda} id = "domanda4" th:value = ${domanda4.iddomanda} ></h2>
+			<h2 th:text=${domanda4.testodomanda}></h2>
+			<p hidden id = "domanda4"  th:text = ${domanda4.iddomanda} ></p>
 			
 			<label for="checkbox1"> Valore1 </label>
 			<input type="radio" id="domanda4_v1" name="risposte_domanda4" value="1">
@@ -67,43 +71,67 @@
 			
 			<!--INVIO MODULO-->
 			<input type="submit" value="Invia Modulo" th:onclick = "invia_modulo()">
-		
-		</form>
 		<script>
                 function invia_modulo(){
                     	
                    //ID delle domande    
-				   let domanda1 = document.getElementById("domanda1").value;
-				   let domanda2 = document.getElementById("domanda2").value;
-				   let domanda3 = document.getElementById("domanda3").value;
-				   let domanda4 = document.getElementById("domanda4").value;
+				   let iddomanda1 = document.getElementById("domanda1").innerHTML;
+				   let iddomanda2 = document.getElementById("domanda2").innerHTML;
+				   let iddomanda3 = document.getElementById("domanda3").innerHTML;
+				   let iddomanda4 = document.getElementById("domanda4").innerHTML;
 				   //lista valori
 				   let lista_valori_domanda1 = [];
-				   let lista_valori_domanda1 = [];
-				   let lista_valori_domanda1 = [];
-				   let lista_valori_domanda1 = [];
-                   let nome = document.getElementById("nome").value;
-                   let cognome = document.getElementById("cognome").value;
-                   let data_nascita = document.getElementById("data_nascita").value;
-                   let sesso = document.getElementById("sesso").value;
-                   let idclasse = document.getElementById("idclasse").value;
-                   let username = document.getElementById("username").value;
-                   let password = document.getElementById("password").value;
-                   let con_password = document.getElementById("con_password").value;
-                   let email = document.getElementById("email").value;
-                   let numero_telefono = document.getElementById("numero_telefono").value;
-                   let indirizzo = document.getElementById("indirizzo").value;
-		                   
-											
-					                   	$.ajax({
-					                           url: "/admin/aggiunta_utente_professore?idruolo="+idruolo+"&nome="+nome+"&cognome="+cognome+"&data_nascita="+data_nascita+"&sesso="+sesso 
-					                           	+"&username="+username +"&password="+password+"&con_password="+con_password
-					                           	+"&email="+email+"&numero_telefono="+numero_telefono+"&indirizzo="+indirizzo,
-					                           type: "post",
-					                           success:function(data){
-													window.location = "/admin/professori";
-					                           }
-					                       });
+				   let lista_valori_domanda2 = [];
+				   let lista_valori_domanda3 = [];
+				   let lista_valori_domanda4 = [];
+				   //prendo tutte le risposte divise per domanda
+				   var risposte_domanda1 = document.getElementsByName('risposte_domanda1');
+				   var risposte_domanda2 = document.getElementsByName('risposte_domanda2');
+				   var risposte_domanda3 = document.getElementsByName('risposte_domanda3');
+				   var risposte_domanda4 = document.getElementsByName('risposte_domanda4');
+				   //controllo qual'è il valore selezionato per domanda
+				   //valori domanda 1
+				   for (var i=0; i<risposte_domanda1.length; i++) {
+				       if (risposte_domanda1[i].checked) {
+				    	   lista_valori_domanda1.push(risposte_domanda1[i].value);
+				       }
+				   }
+				 //valori domanda 2
+				   for (var i=0; i<risposte_domanda2.length; i++) {
+				       if (risposte_domanda2[i].checked) {
+				    	   lista_valori_domanda2.push(risposte_domanda2[i].value);
+				       }
+				   }
+				 //valori domanda 3
+				   for (var i=0; i<risposte_domanda3.length; i++) {
+				       if (risposte_domanda3[i].checked) {
+				    	   lista_valori_domanda3.push(risposte_domanda3[i].value);
+				       }
+				   }
+				 //valori domanda 4
+				   for (var i=0; i<risposte_domanda4.length; i++) {
+				       if (risposte_domanda4[i].checked) {
+				    	   lista_valori_domanda4.push(risposte_domanda4[i].value);
+				       }
+				   }
+					//controllo se tutte le domande hanno una risposta
+					if(lista_valori_domanda1.length != 0 && lista_valori_domanda2.length != 0 && lista_valori_domanda3.length != 0 && lista_valori_domanda4.length != 0 )
+					{
+						//chiamata ajax per inviare tutti i dati al controller
+	                  	$.ajax({
+	                          url:"/invio_modulo?iddomanda1="+iddomanda1+"&iddomanda2="+iddomanda2+"&iddomanda3="+iddomanda3+"&iddomanda4="+iddomanda4 
+	                          	+"&risposta1="+lista_valori_domanda1[0]+"&risposta2="+lista_valori_domanda2[0]
+	                  			+"&risposta3="+lista_valori_domanda3[0]+"&risposta4="+lista_valori_domanda4[0],
+	                          type: "post",
+	                          success:function(data){
+								window.location = "/home";
+	                          }
+	                      });
+					}
+					else{
+						alert("E' obbligatorio rispondere a tutte le domande");
+					}
+                }
 							                  
        	</script>  
 	</body>
