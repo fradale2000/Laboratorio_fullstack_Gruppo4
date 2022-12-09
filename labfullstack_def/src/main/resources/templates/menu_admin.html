@@ -4,25 +4,30 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menù Admin</title>
-    <style>
-        td{
-            padding: 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <script src="https://kit.fontawesome.com/03b6de6df8.js" crossorigin="anonymous"></script>
+    <title> Menu Admin </title>
 </head>
 <body>
-    <h1>Menù Admin</h1><br>
-    <table>
-    	<tr>
-    		<td>Studente</td>
-    		<td><a href="visualizza_report">Report</a></td>
-    		<td><a href="inserisci_studente">Aggiungi</a></td>
-    		<td><a href="visualizza_studente">Rimuovi</a></td>
-    		<td><a href="visualizza_studente">Modifica</a></td>
-    	</tr>    	
-    </table>
-    <br>
-    <a href="login">Logout</a>
+  
+    <div class="hero is-fullheight is-info">
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <div class="column is-8 is-offset-2" >
+                    <h3 class="title has-text-white">Buongiorno Admin</h3>
+                    <hr class="login-hr">
+                    <p class="subtitle has-text-white">Menu </p>
+                    <button class="button has-background-light has-text-info is-medium is-responsive"> <a href ="/visualizza_report"><strong>Report </strong> </a> </button>
+                    <button class="button has-background-light has-text-info is-medium is-responsive"> <a href ="/inserisci_studente"> <strong>Aggiungi </strong></a> </button>
+                    <button class="button has-background-light has-text-info is-medium is-responsive"> <a href ="/visualizza_studente"><strong> Rimuovi </strong></a> </button>
+                    <button class="button has-background-light has-text-info is-medium is-responsive"> <a href ="visualizza_studente"><strong> Modifica </strong></a> </button>
+                </div>
+                
+            </div>
+            <a href="login">Logout</a>
+        </div>
+        
+    </div>
+    
 </body>
 </html>

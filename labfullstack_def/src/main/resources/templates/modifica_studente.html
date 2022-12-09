@@ -1,49 +1,95 @@
-<html lang="en"> 
-    <head>  
-        <title>Modifica studente</title>  
-    </head>  
-	<body>
-	<h1>Modifica studente</h1><br>
-		<form th:action="@{/modifica_studente}" th:object="${utenti}" method="post">  
-            <input type="hidden" name="idutente" value="*{idutente}"></input>
-            <table>  
-                <tr> 
-                   <h2>Stai modificando il seguente studente</h2>
-                   <h3>Nome:</h3> <p th:text=${nomestudente}><p> 
-                   <h3>Cognome: </h3> <p th:text=${cognomestudente}><p> 
-                  <h3> Email:  </h3><p th:text=${emailstudente}><p> 
-                  <h3> Password: </h3> <p th:text=${pwdstudente}><p> 
-                   
-                    <td>Studente</td>  
-                    <td>
-                    <select id="utenti" name="idutente">
-                    	<option th:each="u:${utenti}" th:value="${u.idutente}" th:text="${u.email}"></option>
-                    </select>
-                    </td>  
-                </tr>
-                <tr>  
-           
-                
-                    <td>Nome</td>                  
-              <td><input type="text" name="nome" required placeholder=></input></td>  
-                </tr>
-                <tr>  
-                    <td>Cognome</td>  
-                    <td><input type="text" name="cognome" required></input></td>  
-                </tr>
-                <tr>  
-                    <td>E-mail</td>  
-                    <td><input type="email" name="email" required></input></td>  
-                </tr>
-                <tr>  
-                    <td>Password</td>  
-                    <td><input type="password" name="pwd"></input></td>  
-                </tr>
-                <tr>              
-                    <td><input type="submit" value="Modifica"></input></td>  
-                </tr>                
-            </table>
-        </form>
-        <a href="menu_admin">Torna al menu admin</a> 
-	</body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <script src="https://kit.fontawesome.com/03b6de6df8.js" crossorigin="anonymous"></script>
+    <title>Modifica studente</title>
+</head>
+<body>
+
+   <!-- Parte css per l'intestazione-->
+  <section class="hero is-link is-bold">
+    <div class="hero-body">
+      <div class="container has-text-centered">
+        <h3 class="title has-text-white"> Modifica uno studente </h3>
+        <hr class="login-hr">
+        <p class="subtitle has-text-white">Stai modificando le seguenti credenziali:</p>
+        
+        <p> Nome: <strong th:text="${nomestudente}"></strong></p>
+        <h3> Cognome: <strong th:text="${cognomestudente}"></strong></h3>
+        <h3> Email: <strong th:text="${emailstudente}"></strong></h3>
+        <h3> Password: <strong th:text="${pwdstudente}"></strong></h3>
+       
+      </div>
+    </div>
+  </section>
+
+   <!-- Parte css per il form che quindi è da moficare con le robe di thyme-leaf, da aggiungere name e id-->
+  <section class="hero is-light ">       
+    <div class="hero-body">               
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-5-tablet is-4-desktop is-3-widescreen">  
+ 
+            <form th:action="@{/modifica_studente}" th:object="${utenti}" method="post" class="box has-background-info ">  
+               
+              <input type="hidden" name="idutente" value="*{idutente}"></input> 
+              
+                        
+              <div class="field">
+                <label for="" class="label">Seleziona</label> 
+                </div>
+             <div class="select is-link">   
+              <select id="utenti" name="idutente">
+                <option th:each="u:${utenti}" th:value="${u.idutente}" th:text="${u.email}"></option>
+              </select>
+            </div>
+              <br>
+  
+              <div class="field">
+                <label for="" class="label">Nome</label>                
+                    <input type="text" id="nome" name="nome" placeholder="Nome studente" class="input" required>                    
+              </div>
+              <div class="field">
+                <label for="" class="label">Cognome</label>
+                <input type="text" id="cognome" name="cognome" placeholder="Cognome studente" class="input" required>                     
+              </div>                            
+              <div class="field">
+                <label for="email" class="label">Email</label>
+                <input type="email" id="email" name="email" placeholder="nome.cognome@scuola.it" class="input" required>                     
+              </div>
+              
+              <div class="field">
+                <label for="password" class="label">Password</label>
+                <input type="text" placeholder="Se dimenticata" class="input" >                    
+              </div>
+              <br>
+              <div class="field has-text-centered" >                   
+                <button type="submit" value="Modifica" class="button has-background-light has-text-info"> Modifica </button>
+              </div>
+              
+              
+              <p class="has-text-white has-text-centered"><a href="/menu_admin" ><u> Torna indietro </u> </a> <br><br> <p>                         
+              <!--  Bottone -->
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+      
+   <!-- Footer -->
+    <section class="hero is-light is-bold">
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <h4 class="title is-5 has-text-info">Registro Elettronico</h4>
+          <p> by Cecilia Baccolo, Samira Boutabt, Francesco D'Alessandro, Mohamed Osman<br> Emit Feltrinelli, 2022 </p>
+        </div>
+      </div>
+    </section>
+    
+</body>
 </html>

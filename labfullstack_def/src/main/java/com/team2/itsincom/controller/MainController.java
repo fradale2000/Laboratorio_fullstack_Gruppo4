@@ -1,5 +1,7 @@
 package com.team2.itsincom.controller;
 
+
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +26,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 
-import com.team2.itsincom.ItsincomApplication;
+
 import com.team2.itsincom.Dao.DomandeDao;
 import com.team2.itsincom.Dao.UtentiDao;
 import com.team2.itsincom.model.Utenti;
@@ -95,11 +97,22 @@ public class MainController {
 		
 	}
 	
+	
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public String post_login(@Valid Utenti utenti, @RequestParam("email") String email, @RequestParam("pwd") String pwd, BindingResult fields,HttpSession session) {
 		if(fields.hasErrors()) {
 			return "login";
-		}			
+		}	
+		
+		if(utenteRepository.findByEmail(email).size()>0) {
+			// Lo studente è presente nel db			
+			Utenti adminLogin =utenteRepository.findByEmail(email).get(0);			
+			if(adminLogin.getPwd().equals("admin")) {
+				session.setAttribute("adminLogin", adminLogin);
+				//Se la password è uguale a quella del db, entra
+				LOGGER.info("Studente loggato");
+				return "/menu_admin";
+	}
 		if(utenteRepository.findByEmail(email).size()>0) {
 			// Lo studente è presente nel db			
 			Utenti utenteAttuale=utenteRepository.findByEmail(email).get(0);			
@@ -109,6 +122,9 @@ public class MainController {
 				LOGGER.info("Studente loggato");
 				return "redirect:home/"+utenteAttuale.getIdutente();
 			}
+		
+		}
+		
 		}
 		return "login";
 	}
@@ -253,8 +269,9 @@ public class MainController {
     // RIMOZIONE DI UNO STUDENTE DAL DB
     @RequestMapping(value = "rimuovi_studente/{id}", method = RequestMethod.GET)
     public String post_rimuovi_studente(@PathVariable("id") Integer id) {
-    	utenteRepository.deleteById(id);
+    	utenteRepository.deleteById(id);    	
     	LOGGER.info("Admin ha rimosso uno studente");
+    	
         return "redirect:/visualizza_studente";
 	}
     
