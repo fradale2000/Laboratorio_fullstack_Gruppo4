@@ -118,7 +118,7 @@ public class MainController {
 			if(adminLogin.getPwd().equals("admin")) {
 				session.setAttribute("adminLogin", adminLogin);
 				//Se la password è uguale a quella del db, entra
-				LOGGER.info("Studente loggato");
+				LOGGER.info("Admin loggato");
 				return "/menu_admin";
 	}
 		if(utenteRepository.findByEmail(email).size()>0) {
@@ -128,7 +128,7 @@ public class MainController {
 				session.setAttribute("utenteAttuale", utenteAttuale);
 				//Se la password è uguale a quella del db, entra
 				LOGGER.info("Studente loggato");
-				return "redirect:home/"+utenteAttuale.getIdutente();
+				return "redirect:home";
 			}
 		
 		}
@@ -138,9 +138,10 @@ public class MainController {
 	}
 	
 	// ACCESSO HOME UTENTE
-	@RequestMapping(value = "home/{id}", method = RequestMethod.GET)
-	public ModelAndView get_home_id(@PathVariable("id") int idutente){
-		Utenti utente = utenteRepository.findByIdutente(idutente);
+	@RequestMapping(value = "home", method = RequestMethod.GET)
+	public ModelAndView home(HttpSession session){
+		Utenti utenteAttuale = (Utenti) session.getAttribute("utenteAttuale");
+		Utenti utente = utenteRepository.findByIdutente(utenteAttuale.getIdutente());
 		ModelAndView menuUtente = new ModelAndView();
 		if (utente != null){
 			menuUtente.setViewName("home");
@@ -246,7 +247,6 @@ public class MainController {
 			}	
 			//calcolo media
 			int media = ((1 *voto_1) + (2 *voto_2) + (3 *voto_3) + (4 *voto_4) )/nrisposte;
-			System.out.println(media);
 			switch (media) {
 			case 1:
 				percentuali.setMedia("NON SODDISFATTI");
