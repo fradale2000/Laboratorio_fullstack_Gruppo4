@@ -33,6 +33,7 @@ import com.team2.itsincom.Dao.DomandeDao;
 import com.team2.itsincom.Dao.FeedbackDao;
 import com.team2.itsincom.Dao.UtentiDao;
 import com.team2.itsincom.model.Utenti;
+import com.team2.itsincom.model.DateDiffFeedback;
 import com.team2.itsincom.model.Domande;
 import com.team2.itsincom.model.Feedback;
 import com.team2.itsincom.model.PercFeedback;
@@ -138,19 +139,50 @@ public class MainController {
 	}
 	
 	// ACCESSO HOME UTENTE
+//	@RequestMapping(value = "home", method = RequestMethod.GET)
+//	public ModelAndView home(HttpSession session){
+//		Utenti utenteAttuale = (Utenti) session.getAttribute("utenteAttuale");
+//		Utenti utente = utenteRepository.findByIdutente(utenteAttuale.getIdutente());
+//		
+//		ModelAndView menuUtente = new ModelAndView();
+//		if (utente != null){
+//			menuUtente.setViewName("home");
+//			menuUtente.addObject("utente",utente);
+//			return menuUtente;
+//				} else {
+//					return null;
+//				}
+//		
+//			} 
+	
+	// ACCESSO HOME UTENTE
 	@RequestMapping(value = "home", method = RequestMethod.GET)
-	public ModelAndView home(HttpSession session){
+	public String home(HttpSession session,Model model){
 		Utenti utenteAttuale = (Utenti) session.getAttribute("utenteAttuale");
-		Utenti utente = utenteRepository.findByIdutente(utenteAttuale.getIdutente());
-		ModelAndView menuUtente = new ModelAndView();
-		if (utente != null){
-			menuUtente.setViewName("home");
-			menuUtente.addObject("utente",utente);
-			return menuUtente;
-				} else {
-					return null;
-				}
-			} 
+		List <DateDiffFeedback> checkfeedback = feedbackRepository.checkFeedback(utenteAttuale.getIdutente());
+		
+		if (utenteAttuale != null){
+			model.addAttribute("utente",utenteAttuale);
+			
+			}
+		//controllo che l'utente abbia già fatto un form
+		//se il risulato è 0 vuole dire che non ha mai fatto un form
+		if (checkfeedback.size() > 0) {
+			//se invece l'ha già fatto controllo quanto tempo fa
+			if (checkfeedback.get(0).getDatediff()>= 7) {
+				System.out.println("utente ha già fatto il modulo");
+				model.addAttribute("disabled", true);
+			    }else {
+			    	model.addAttribute("disabled", false);
+			    }
+			
+		} else {
+			return null;
+		}
+			
+		return "/home";
+		} 
+	
 	
 	// MODULO
 	@GetMapping("/modulo") 
