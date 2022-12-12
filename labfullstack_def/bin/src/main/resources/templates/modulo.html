@@ -1,18 +1,138 @@
-<html lang="en"> 
+<html lang="en" xmlns:th="https://thymeleaf.org"> 
     <head>  
-        <title>Modulo </title>  
+    	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <title>Modulo Feedback </title>  
         
     </head>  
 	<body>
-	
-	<h1>Modulo</h1>
-	
-	
-	
-	Questo è il tuo modulo, compilalo
-	
-	
-	
-	
+	<h1>Modulo Feedback</h1>
+			<!-- DOMANDA UNO-->
+ 			<h2 th:text=${domanda1.testodomanda}   ></h2> 
+			<p hidden id = "domanda1"  th:text = ${domanda1.iddomanda} ></p>
+			
+			<label for="checkbox1"> Valore1 </label>
+			<input type="radio" id="domanda1_v1" name="risposte_domanda1" value="1">
+			
+			<label for="checkbox2"> Valore2 </label>
+			<input type="radio" id="domanda1_v2" name="risposte_domanda1" value="2">
+			
+			<label for="checkbox3"> Valore3 </label>
+			<input type="radio" id="domanda1_v3" name="risposte_domanda1" value="3">
+			
+			<label for="checkbox4"> Valore4 </label>
+			<input type="radio" id="domanda1_v4" name="risposte_domanda1" value="4">
+			<!-- DOMANDA DUE-->
+			<h2 th:text=${domanda2.testodomanda} ></h2>
+			<p hidden id = "domanda2"  th:text = ${domanda2.iddomanda} ></p>
+			
+			<label for="checkbox1"> Valore1 </label>
+			<input type="radio" id="domanda2_v1" name="risposte_domanda2" value="1">
+			
+			<label for="checkbox2"> Valore2 </label>
+			<input type="radio" id="domanda2_v2" name="risposte_domanda2" value="2">
+			
+			<label for="checkbox3"> Valore3 </label>
+			<input type="radio" id="domanda2_v3" name="risposte_domanda2" value="3">
+			
+			<label for="checkbox4"> Valore4 </label>
+			<input type="radio" id="domanda2_v4" name="risposte_domanda2" value="4">
+			
+			<!-- DOMANDA TRE-->
+			<h2 th:text=${domanda3.testodomanda}></h2>
+			<p hidden id = "domanda3"  th:text = ${domanda3.iddomanda} ></p>
+			
+			<label for="checkbox1"> Valore1 </label>
+			<input type="radio" id="domanda3_v1" name="risposte_domanda3" value="1">
+			
+			<label for="checkbox2"> Valore2 </label>
+			<input type="radio" id="domanda3_v2" name="risposte_domanda3" value="2">
+			
+			<label for="checkbox3"> Valore3 </label>
+			<input type="radio" id="domanda3_v3" name="risposte_domanda3" value="3">
+			
+			<label for="checkbox4"> Valore4 </label>
+			<input type="radio" id="domanda3_v4" name="risposte_domanda3" value="4">
+			
+			<!-- DOMANDA QUATTRO-->
+			<h2 th:text=${domanda4.testodomanda}></h2>
+			<p hidden id = "domanda4"  th:text = ${domanda4.iddomanda} ></p>
+			
+			<label for="checkbox1"> Valore1 </label>
+			<input type="radio" id="domanda4_v1" name="risposte_domanda4" value="1">
+			
+			<label for="checkbox2"> Valore2 </label>
+			<input type="radio" id="domanda4_v2" name="risposte_domanda4" value="2">
+			
+			<label for="checkbox3"> Valore3 </label>
+			<input type="radio" id="domanda4_v3" name="risposte_domanda4" value="3">
+			
+			<label for="checkbox4"> Valore4 </label>
+			<input type="radio" id="domanda4_v4" name="risposte_domanda4" value="4">
+			
+			<!--INVIO MODULO-->
+			<input type="submit" value="Invia Modulo" th:onclick = "invia_modulo()">
+		<script>
+                function invia_modulo(){
+                    	
+                   //ID delle domande    
+				   let iddomanda1 = document.getElementById("domanda1").innerHTML;
+				   let iddomanda2 = document.getElementById("domanda2").innerHTML;
+				   let iddomanda3 = document.getElementById("domanda3").innerHTML;
+				   let iddomanda4 = document.getElementById("domanda4").innerHTML;
+				   //lista valori
+				   let lista_valori_domanda1 = [];
+				   let lista_valori_domanda2 = [];
+				   let lista_valori_domanda3 = [];
+				   let lista_valori_domanda4 = [];
+				   //prendo tutte le risposte divise per domanda
+				   var risposte_domanda1 = document.getElementsByName('risposte_domanda1');
+				   var risposte_domanda2 = document.getElementsByName('risposte_domanda2');
+				   var risposte_domanda3 = document.getElementsByName('risposte_domanda3');
+				   var risposte_domanda4 = document.getElementsByName('risposte_domanda4');
+				   //controllo qual'è il valore selezionato per domanda
+				   //valori domanda 1
+				   for (var i=0; i<risposte_domanda1.length; i++) {
+				       if (risposte_domanda1[i].checked) {
+				    	   lista_valori_domanda1.push(risposte_domanda1[i].value);
+				       }
+				   }
+				 //valori domanda 2
+				   for (var i=0; i<risposte_domanda2.length; i++) {
+				       if (risposte_domanda2[i].checked) {
+				    	   lista_valori_domanda2.push(risposte_domanda2[i].value);
+				       }
+				   }
+				 //valori domanda 3
+				   for (var i=0; i<risposte_domanda3.length; i++) {
+				       if (risposte_domanda3[i].checked) {
+				    	   lista_valori_domanda3.push(risposte_domanda3[i].value);
+				       }
+				   }
+				 //valori domanda 4
+				   for (var i=0; i<risposte_domanda4.length; i++) {
+				       if (risposte_domanda4[i].checked) {
+				    	   lista_valori_domanda4.push(risposte_domanda4[i].value);
+				       }
+				   }
+					//controllo se tutte le domande hanno una risposta
+					if(lista_valori_domanda1.length != 0 && lista_valori_domanda2.length != 0 && lista_valori_domanda3.length != 0 && lista_valori_domanda4.length != 0 )
+					{
+						//chiamata ajax per inviare tutti i dati al controller
+	                  	$.ajax({
+	                          url:"/invio_modulo?iddomanda1="+iddomanda1+"&iddomanda2="+iddomanda2+"&iddomanda3="+iddomanda3+"&iddomanda4="+iddomanda4 
+	                          	+"&risposta1="+lista_valori_domanda1[0]+"&risposta2="+lista_valori_domanda2[0]
+	                  			+"&risposta3="+lista_valori_domanda3[0]+"&risposta4="+lista_valori_domanda4[0],
+	                          type: "post",
+	                          success:function(data){
+								window.location = "/home";
+	                          }
+	                      });
+					}
+					else{
+						alert("E' obbligatorio rispondere a tutte le domande");
+					}
+                }
+							                  
+       	</script>  
 	</body>
 	</html>
