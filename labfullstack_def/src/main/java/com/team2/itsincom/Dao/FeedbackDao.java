@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.team2.itsincom.model.DateDiffFeedback;
 import com.team2.itsincom.model.Domande;
 import com.team2.itsincom.model.Feedback;
 
@@ -35,7 +36,9 @@ public interface FeedbackDao extends CrudRepository <Feedback, Long> {
 	@Query(value="SELECT COUNT(idfeedback) as nvoti FROM `feedbacks` WHERE iddomanda = :iddomanda and voto = :voto",nativeQuery = true)
 	public int numeroVotiperdomanda(int iddomanda, int voto );
 	
-	
+	//query per prendere il numero di risposte alla determinata domanda con determinato voto
+	@Query(value="SELECT idfeedback,voto,datafeedback,idutente,iddomanda FROM `feedbacks` WHERE (idutente = :idutente AND datediff(sysdate(),datafeedback) = 7) GROUP by idutente;",nativeQuery = true)
+	public List <DateDiffFeedback> checkFeedback(int idutente);
 	
 	
 

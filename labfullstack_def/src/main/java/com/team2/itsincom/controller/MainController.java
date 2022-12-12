@@ -76,7 +76,7 @@ public class MainController {
 		String url = "https://www.google.com/recaptcha/api/siteverify";
 		String params = "?secret=6LcmWycjAAAAAL_CPGuBMw7G9MzzVYRjOYGV0joE&response="+captchaResponse;		
 		ReCaptchaResponse reCaptchaResponse = restTemplate.exchange(url+params, HttpMethod.POST,null,ReCaptchaResponse.class).getBody();
-		
+		System.out.println(email);
 	
 		if(fields.hasErrors()) {
 			LOGGER.info("Registrazione fallita");
@@ -179,10 +179,10 @@ public class MainController {
 	@RequestMapping(value="invio_modulo", method=RequestMethod.POST)
 	@ResponseBody
 	public void AggiuntaStudente(@RequestParam("iddomanda1") int iddomanda1,@RequestParam("iddomanda2") int iddomanda2,
-								@RequestParam("iddomanda3")  int iddomanda3,@RequestParam("iddomanda4") int iddomanda4,
-								@RequestParam("risposta1")   int risposta1, @RequestParam("risposta2") int risposta2,
-								@RequestParam("risposta3")   int risposta3, @RequestParam("risposta4") int risposta4,
-								HttpSession session) {
+									@RequestParam("iddomanda3") int iddomanda3,@RequestParam("iddomanda4") int iddomanda4,
+									@RequestParam("risposta1") int risposta1,@RequestParam("risposta2") int risposta2,
+									@RequestParam("risposta3") int risposta3,@RequestParam("risposta4") int risposta4,
+									HttpSession session) {
 		Utenti utenteAttuale = (Utenti) session.getAttribute("utenteAttuale");
 		feedbackRepository.aggiuntaFeedback(risposta1, utenteAttuale.getIdutente(), iddomanda1);
 		feedbackRepository.aggiuntaFeedback(risposta2, utenteAttuale.getIdutente(), iddomanda2);
@@ -378,9 +378,6 @@ public class MainController {
     	
         return "redirect:/visualizza_studente";
 	}
-    
-    
-    
     
 
 
