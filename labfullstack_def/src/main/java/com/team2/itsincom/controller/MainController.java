@@ -5,6 +5,7 @@ package com.team2.itsincom.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -119,7 +120,7 @@ public class MainController {
 				session.setAttribute("adminLogin", adminLogin);
 				//Se la password è uguale a quella del db, entra
 				LOGGER.info("Admin loggato");
-				return "/menu_admin";
+				return "redirect:menu_admin";
 	}
 		if(utenteRepository.findByEmail(email).size()>0) {
 			// Lo studente è presente nel db			
@@ -128,14 +129,24 @@ public class MainController {
 				session.setAttribute("utenteAttuale", utenteAttuale);
 				//Se la password è uguale a quella del db, entra
 				LOGGER.info("Studente loggato");
-				return "redirect:home";
-				
-			}
-		
-		}
-		
+				return "redirect:home";				
+				}		
+		  }		
 		}
 		return "login";
+	}
+	
+	
+	
+	@RequestMapping(value = "/logout")
+	public String logout(HttpServletRequest request) {
+	    HttpSession session = request.getSession(false);
+	    if (session != null) {
+	        session.invalidate();
+	        LOGGER.info("Logout effettuato");
+	        
+	    }
+	    return "redirect:/login";  //Where you go after logout here.
 	}
 	
 	// ACCESSO HOME UTENTE
@@ -152,6 +163,8 @@ public class MainController {
 					return null;
 				}
 			} 
+		
+	
 	
 	// MODULO
 	@GetMapping("/modulo") 
@@ -175,6 +188,15 @@ public class MainController {
 		return "/modulo";				
 	}
 	
+	
+	
+	
+	
+	// CODICE PER LE FUNZIONI DELL'ADMIN
+    
+    
+	
+		// ACCESSO ALLA PAGINA menu_admin.html
 	//INVIO MODULO
 	
 	@RequestMapping(value="invio_modulo", method=RequestMethod.POST)
@@ -192,10 +214,16 @@ public class MainController {
 		LOGGER.info("Feedback salvato");
 	}
 	
+	
+	
+	
+	
+	
 	//REPORT FEEDBACKS
 	
 	@GetMapping("/reportfeedbacks") 
 	public String reportfeedbacks(Model model,HttpSession session) {
+		Utenti adminLogin = (Utenti) session.getAttribute("adminLogin");
 		LOGGER.info("Admin in reportfeedbacks");
 		//prendo tutte le domande e le stampo nell'html
 		List <Domande> listadomande = domandaRepository.listadomande();
@@ -277,21 +305,27 @@ public class MainController {
         
  
     
-    // CODICE PER LE FUNZIONI DELL'ADMIN
     
     
-	
-	// ACCESSO ALLA PAGINA menu_admin.html
-    @RequestMapping(value = "menu_admin", method = RequestMethod.GET)
-    public String get_menu_admin() {
-    	LOGGER.info("Admin loggato");
-        return "menu_admin";
-    }
     // INSERIMENTO STUDENTE
     
-    
+	@RequestMapping(value = "menu_admin", method = RequestMethod.GET)
+    public ModelAndView get_menu_admin(HttpSession session) {
+		Utenti adminLogin = (Utenti) session.getAttribute("adminLogin");
+		Utenti utente = utenteRepository.findByIdutente(adminLogin.getIdutente());
+		ModelAndView menuAdmin = new ModelAndView();
+		if (utente != null) {
+			menuAdmin.setViewName("menu_admin");
+			menuAdmin.addObject("utente",utente);
+			return menuAdmin;
+				} else {
+					return null;				
+		}  
+		
+		
+    }
     @GetMapping("visualizza_studente")
-    public ModelAndView get_visualizza_studente(Utenti utenti) {
+    public ModelAndView get_visualizza_studente(HttpSession session) {
         ModelAndView listaUtenti=new ModelAndView();
         listaUtenti.setViewName("visualizza_studente");
         listaUtenti.addObject("utenti", utenteRepository.visualizzaUtenti());
