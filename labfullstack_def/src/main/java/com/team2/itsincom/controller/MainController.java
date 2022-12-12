@@ -129,6 +129,7 @@ public class MainController {
 				//Se la password è uguale a quella del db, entra
 				LOGGER.info("Studente loggato");
 				return "redirect:home";
+				
 			}
 		
 		}
