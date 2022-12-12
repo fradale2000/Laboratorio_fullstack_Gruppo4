@@ -324,21 +324,28 @@ public class MainController {
 		
 		
     }
-    @GetMapping("visualizza_studente")
+    @RequestMapping(value = "visualizza_studente", method = RequestMethod.GET)
     public ModelAndView get_visualizza_studente(HttpSession session) {
+    	Utenti adminLogin = (Utenti) session.getAttribute("adminLogin");
+    	Utenti utente = utenteRepository.findByIdutente(adminLogin.getIdutente());
         ModelAndView listaUtenti=new ModelAndView();
         listaUtenti.setViewName("visualizza_studente");
+        listaUtenti.addObject("utente",utente);
         listaUtenti.addObject("utenti", utenteRepository.visualizzaUtenti());
+        LOGGER.info("Admin in visualizza");
         return listaUtenti;
     }
     
     
     // ACCESSO ALLA PAGINA inserisci_studente.html
-    @GetMapping("inserisci_studente")
-    public ModelAndView get_inserimento_studente(Utenti utenti) {
+    @RequestMapping(value = "inserisci_studente", method = RequestMethod.GET)
+    public ModelAndView get_inserimento_studente(HttpSession session) {
+    	Utenti adminLogin = (Utenti) session.getAttribute("adminLogin");
+    	Utenti utente = utenteRepository.findByIdutente(adminLogin.getIdutente());
         ModelAndView listaUtenti=new ModelAndView();
         listaUtenti.setViewName("inserisci_studente");
         listaUtenti.addObject("utenti", utenteRepository.visualizzaUtenti()); 
+        listaUtenti.addObject("utente",utente);
         LOGGER.info("Admin in inserimento");
         return listaUtenti;
     }
@@ -363,13 +370,15 @@ public class MainController {
  
     // ACCESSO ALLA PAGINA modifica_studente.html
     @RequestMapping(value ="modifica_studente/{id}" , method = RequestMethod.GET)
-    public ModelAndView get_modifica_studente(@PathVariable("id") int idutente) {
+    public ModelAndView get_modifica_studente(@PathVariable("id") int idutente, HttpSession session) {
+    	Utenti adminLogin = (Utenti) session.getAttribute("adminLogin");
+    	Utenti admin = utenteRepository.findByIdutente(adminLogin.getIdutente());
     	Utenti utente = utenteRepository.findByIdutente(idutente);
     	System.out.println(utente.getNome());
     	ModelAndView modificaStudente=new ModelAndView();
         modificaStudente.setViewName("modifica_studente");
        //non stampa il maledetto nome
-        
+        modificaStudente.addObject("admin",admin);
         modificaStudente.addObject("utenti", utente);  
         modificaStudente.addObject("idutente", utente.getIdutente());
         modificaStudente.addObject("nomestudente", utente.getNome());
