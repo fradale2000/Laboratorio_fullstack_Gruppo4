@@ -335,7 +335,8 @@ public class MainController {
         modificaStudente.setViewName("modifica_studente");
        //non stampa il maledetto nome
         
-        modificaStudente.addObject("utenti", utente);        
+        modificaStudente.addObject("utenti", utente);  
+        modificaStudente.addObject("idutente", utente.getIdutente());
         modificaStudente.addObject("nomestudente", utente.getNome());
         modificaStudente.addObject("cognomestudente", utente.getCognome()); 
         modificaStudente.addObject("emailstudente", utente.getEmail()); 
@@ -348,21 +349,22 @@ public class MainController {
        
     // MODIFICA DI UNO STUDENTE SUL DB
     @RequestMapping(value = "modifica_studente", method = RequestMethod.POST)
-    public String post_modifica_studente(@Valid Utenti utenti, @RequestParam("idutente") Integer idutente, @RequestParam("nome") String nome, @RequestParam("cognome") String cognome, @RequestParam("email") String email, @RequestParam("pwd") String pwd,  BindingResult fields) {
+    public String post_modifica_studente(@Valid Utenti utenti, @RequestParam(value = "idutente", required = false) Integer idutente, @RequestParam("nome") String nome, @RequestParam("cognome") String cognome,
+    									  @RequestParam("email") String email, @RequestParam(value = "pwd", required = false) String pwd,  BindingResult fields) {
     	if(fields.hasErrors()) {
  			return "redirect:/menu_admin";
  		}
     	
- 		Utenti utenteModificato=utenteRepository.findById(idutente).get();
- 		utenteModificato.setNome(nome);
- 		utenteModificato.setCognome(cognome);
- 		utenteModificato.setEmail(email);
- 		utenteModificato.setPwd(pwd);
- 		utenteRepository.save(utenteModificato);
+    	Utenti nuovoutente = new Utenti();
+    	nuovoutente.setIdutente(idutente);
+    	nuovoutente.setNome(nome);
+    	nuovoutente.setCognome(cognome);
+    	nuovoutente.setEmail(email);
+    	nuovoutente.setPwd(pwd);
+ 		utenteRepository.save(nuovoutente);
  		LOGGER.info("Utente modificato correttamente");
         return "visualizza_studente";           
-	}
-    
+	}    
     
     
  
