@@ -60,7 +60,9 @@
             <td th:text = "${u.email}"></td>
             <td th:text = "${u.pwd}"></td>
             <td><strong><a th:href="@{'modifica_studente/' + ${u.getIdutente()}}">Modifica</strong></a></td>
-	        <td><strong><a th:href="@{'rimuovi_studente/' + ${u.getIdutente()}}">Rimuovi</strong></a></td>
+	        <td><strong><a th:href="@{'rimuovi_studente/' + ${u.getIdutente()}}" 
+	        			   th:data-confirm-delete="|Sei sicuro di vole rimuovere ${u.nome +' '+ u.cognome}?|"
+  						   onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false">Rimuovi</strong></a></td>
         </tr> 
         </th:block>
         </table> 
@@ -77,6 +79,5 @@
         </div>
       </div>
     </section>
-    
 </body>
 </html>

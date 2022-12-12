@@ -77,7 +77,7 @@ public class MainController {
 		String url = "https://www.google.com/recaptcha/api/siteverify";
 		String params = "?secret=6LcmWycjAAAAAL_CPGuBMw7G9MzzVYRjOYGV0joE&response="+captchaResponse;		
 		ReCaptchaResponse reCaptchaResponse = restTemplate.exchange(url+params, HttpMethod.POST,null,ReCaptchaResponse.class).getBody();
-		System.out.println(email);
+		
 	
 		if(fields.hasErrors()) {
 			LOGGER.info("Registrazione fallita");
@@ -138,50 +138,49 @@ public class MainController {
 		return "login";
 	}
 	
-	// ACCESSO HOME UTENTE
-//	@RequestMapping(value = "home", method = RequestMethod.GET)
-//	public ModelAndView home(HttpSession session){
-//		Utenti utenteAttuale = (Utenti) session.getAttribute("utenteAttuale");
-//		Utenti utente = utenteRepository.findByIdutente(utenteAttuale.getIdutente());
-//		
-//		ModelAndView menuUtente = new ModelAndView();
-//		if (utente != null){
-//			menuUtente.setViewName("home");
-//			menuUtente.addObject("utente",utente);
-//			return menuUtente;
-//				} else {
-//					return null;
-//				}
-//		
-//			} 
-	
-	// ACCESSO HOME UTENTE
+	 //ACCESSO HOME UTENTE
 	@RequestMapping(value = "home", method = RequestMethod.GET)
-	public String home(HttpSession session,Model model){
+	public ModelAndView home(HttpSession session){
 		Utenti utenteAttuale = (Utenti) session.getAttribute("utenteAttuale");
-		List <DateDiffFeedback> checkfeedback = feedbackRepository.checkFeedback(utenteAttuale.getIdutente());
+		Utenti utente = utenteRepository.findByIdutente(utenteAttuale.getIdutente());
 		
-		if (utenteAttuale != null){
-			model.addAttribute("utente",utenteAttuale);
-			
-			}
-		//controllo che l'utente abbia già fatto un form
-		//se il risulato è 0 vuole dire che non ha mai fatto un form
-		if (checkfeedback.size() > 0) {
-			//se invece l'ha già fatto controllo quanto tempo fa
-			if (checkfeedback.get(0).getDatediff()>= 7) {
-				System.out.println("utente ha già fatto il modulo");
-				model.addAttribute("disabled", true);
-			    }else {
-			    	model.addAttribute("disabled", false);
-			    }
-			
-		} else {
-			return null;
-		}
-			
-		return "/home";
-		} 
+		ModelAndView menuUtente = new ModelAndView();
+		if (utente != null){
+			menuUtente.setViewName("home");
+			menuUtente.addObject("utente",utente);
+			return menuUtente;
+				} else {
+					return null;
+				}
+		
+			} 
+	
+//	// ACCESSO HOME UTENTE
+//	@RequestMapping(value = "home", method = RequestMethod.GET)
+//	public String home(HttpSession session,Model model){
+//		Utenti utenteAttuale = (Utenti) session.getAttribute("utenteAttuale");
+//		List <DateDiffFeedback> checkfeedback = feedbackRepository.checkFeedback(utenteAttuale.getIdutente());
+//		
+//		if (utenteAttuale != null){
+//			model.addAttribute("utente",utenteAttuale);
+//			}
+//		//controllo che l'utente abbia già fatto un form
+//		//se il risulato è 0 vuole dire che non ha mai fatto un form
+//		if (checkfeedback.size() > 0) {
+//			//se invece l'ha già fatto controllo quanto tempo fa
+//			if (checkfeedback.get(0).getDatediff()>= 7) {
+//				System.out.println("utente ha già fatto il modulo");
+//				model.addAttribute("disabled", true);
+//			    }else {
+//			    	model.addAttribute("disabled", false);
+//			    }
+//			
+//		} else {
+//			return null;
+//		}
+//			
+//		return "/home";
+//		} 
 	
 	
 	// MODULO
@@ -393,16 +392,13 @@ public class MainController {
  		utenteRepository.save(utenteModificato);
  		LOGGER.info("Utente modificato correttamente");
         return "visualizza_studente";           
-	}
-    
-    
-    
+	}    
  
     // RIMOZIONE STUDENTE
     
     // Metodo per rimuovere un utente senza andare in un altra pagina
     
-    // RIMOZIONE DI UNO STUDENTE DAL DB
+//    // RIMOZIONE DI UNO STUDENTE DAL DB
     @RequestMapping(value = "rimuovi_studente/{id}", method = RequestMethod.GET)
     public String post_rimuovi_studente(@PathVariable("id") Integer id) {
     	utenteRepository.deleteById(id);    	
@@ -410,6 +406,15 @@ public class MainController {
     	
         return "redirect:/visualizza_studente";
 	}
+    
+ // RIMOZIONE DI UNO STUDENTE DAL DB
+//    @RequestMapping(value = "rimuovi_studente", method = RequestMethod.POST)
+//  	public String post_rimuovi_studente(@RequestParam("idutente") Integer idutente) {
+//  	utenteRepository.deleteById(idutente);    	
+//  	LOGGER.info("Admin ha rimosso uno studente");
+//  	
+//      return "redirect:/visualizza_studente";
+//	}
     
 
 
