@@ -166,7 +166,7 @@ public class MainController {
 		
 	
 	
-	// MODULO
+	// MODULO UTENTE
 	@GetMapping("/modulo") 
 	public String modulo(Model model,HttpSession session) {
 		LOGGER.info("Utente in modulo");
@@ -418,5 +418,5 @@ public class MainController {
     
 
 
-    
+ 
 }
