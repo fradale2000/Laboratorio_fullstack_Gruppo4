@@ -40,7 +40,7 @@
       <h3 class="title has-text-black has-text-centered"> Registro elettronico </h3>
       
       
-        <div class="columns is-centered">
+        <div class="columns is-centered table-container">
       <table class="table is-hoverable">
         
         
@@ -59,6 +59,7 @@
             <td th:text = "${u.cognome}"></td>
             <td th:text = "${u.email}"></td>
             <td th:text = "${u.pwd}"></td>
+            
             <td><strong><a th:href="@{'modifica_studente/' + ${u.getIdutente()}}">Modifica</strong></a></td>
 	        <td><strong><a th:href="@{'rimuovi_studente/' + ${u.getIdutente()}}" 
 	        			   th:data-confirm-delete="|Sei sicuro di vole rimuovere ${u.nome +' '+ u.cognome}?|"

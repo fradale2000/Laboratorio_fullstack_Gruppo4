@@ -72,32 +72,59 @@ public class MainController {
 	
 	//Codice per inserire la password	
 	@RequestMapping(value = "registrazione", method = RequestMethod.POST)
-	public String post_registrazione(@Valid Utenti utenti, @RequestParam("email") String email, @RequestParam("pwd") String pwd, @RequestParam("g-recaptcha-response") String captchaResponse, BindingResult fields) {
+	public String post_registrazione(@Valid Utenti utenti, 
+									@RequestParam("email") String email, 
+									@RequestParam("pwd") String pwd, 
+									@RequestParam("g-recaptcha-response") String captchaResponse, 
+									BindingResult fields) {	
 		
 		String url = "https://www.google.com/recaptcha/api/siteverify";
 		String params = "?secret=6LcmWycjAAAAAL_CPGuBMw7G9MzzVYRjOYGV0joE&response="+captchaResponse;		
 		ReCaptchaResponse reCaptchaResponse = restTemplate.exchange(url+params, HttpMethod.POST,null,ReCaptchaResponse.class).getBody();
-		System.out.println(email);
-	
-		if(fields.hasErrors()) {
-			LOGGER.info("Registrazione fallita");
-			return "registrazione";			
-		}	
 		
-		if(utenteRepository.findByEmail(email).size()>0) {
+		String encryptedpassword;	
+		
+		try   
+        {  			
+			
+			/* MessageDigest instance for MD5. */  
+			MessageDigest m = MessageDigest.getInstance("MD5");  
+        	/* Add plain-text password bytes to digest using MD5 update() method. */  
+			m.update(pwd.getBytes());   
+			/* Convert the hash value into bytes */   
+			byte[] bytes = m.digest();  	              
+            /* The bytes array has bytes in decimal form. Converting it into hexadecimal format. */  
+            StringBuilder s = new StringBuilder();  
+            for(int i=0; i< bytes.length ;i++) {  
+            	s.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));  
+            } 
+            
+            encryptedpassword = s.toString();
+            
+            
+            if(utenteRepository.findByEmail(email).size()>0) {
 			// Lo studente è presente nel database
+
 			Utenti utenteAttuale = utenteRepository.findByEmail(email).get(0);
-			if(utenteAttuale.getPwd()==null) {
-				// La password dello studente non è impostata
-				utenteRepository.registrazione(email, pwd);
+			if(utenteAttuale.getPwd()== null) {				
+				// La password dello studente non è impostata				
+				utenteRepository.registrazione(email, encryptedpassword);
 				LOGGER.info("Registrazione confermata");
 				return "login";
-			}
-		}		
-		LOGGER.info("Registrazione fallita");
-		return "registrazione";		
-	}
+			} else {
+				LOGGER.info("Registrazione fallita");
+	        	return "redirect:/registrazione?error";  
+			} } }
+          
+        catch (NoSuchAlgorithmException e)  
 	
+        {  
+            e.printStackTrace();  
+        }
+	LOGGER.info("Registrazione fallita");
+	return "redirect:/login";  	          
+     } 
+
 	
 	@GetMapping("/login") 
 	public String login() {
@@ -108,33 +135,75 @@ public class MainController {
 	
 	
 	@RequestMapping(value = "login", method = RequestMethod.POST)
-	public String post_login(@Valid Utenti utenti, @RequestParam("email") String email, @RequestParam("pwd") String pwd, BindingResult fields,HttpSession session) {
-		if(fields.hasErrors()) {
-			return "login";
-		}	
+	public String post_login(@Valid Utenti utenti, @RequestParam("email") String email, @RequestParam("pwd") String pwd, BindingResult fields, Model model, HttpSession session) {
 		
-		if(utenteRepository.findByEmail(email).size()>0) {
-			// Lo studente è presente nel db			
-			Utenti adminLogin =utenteRepository.findByEmail(email).get(0);			
-			if(adminLogin.getPwd().equals("admin")) {
-				session.setAttribute("adminLogin", adminLogin);
-				//Se la password è uguale a quella del db, entra
-				LOGGER.info("Admin loggato");
-				return "redirect:menu_admin";
-	}
-		if(utenteRepository.findByEmail(email).size()>0) {
-			// Lo studente è presente nel db			
-			Utenti utenteAttuale=utenteRepository.findByEmail(email).get(0);			
-			if(utenteAttuale.getPwd().equals(pwd)) {
-				session.setAttribute("utenteAttuale", utenteAttuale);
-				//Se la password è uguale a quella del db, entra
-				LOGGER.info("Studente loggato");
-				return "redirect:home";				
-				}		
-		  }		
+
+		  String encryptedpassword;
+		try   
+	        {  			
+				
+				/* MessageDigest instance for MD5. */  
+				MessageDigest m = MessageDigest.getInstance("MD5");  
+	        	/* Add plain-text password bytes to digest using MD5 update() method. */  
+				m.update(pwd.getBytes());   
+				/* Convert the hash value into bytes */   
+				byte[] bytes = m.digest();  	              
+	            /* The bytes array has bytes in decimal form. Converting it into hexadecimal format. */  
+	            StringBuilder s = new StringBuilder();  
+	            for(int i=0; i< bytes.length ;i++) {  
+	            	s.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));  
+	            }  	              
+	            /* Complete hashed password in hexadecimal format */  
+	            encryptedpassword = s.toString();  		         
+		        /*save user in db */
+	            
+				Utenti utenteAttuale = utenteRepository.login(email, encryptedpassword);				
+				if(utenteAttuale != null) {
+				session.setAttribute("utenteAttuale", utenteAttuale);				
+				LOGGER.info("Utente loggato"); 				
+				return "redirect:/home/";
+				}
+				if(utenteRepository.findByEmail(email).size()>0) {
+					// Lo studente è presente nel db			
+					Utenti adminLogin =utenteRepository.findByEmail(email).get(0);			
+					if(adminLogin.getPwd().equals("admin")) {				
+						session.setAttribute("adminLogin", adminLogin);
+						//Se la password è uguale a quella del db, entra
+						LOGGER.info("Admin loggato");
+						return "redirect:menu_admin";
+					}  
+					
+					}
+				
+	        } 
+		
+		
+		
+		catch (NoSuchAlgorithmException e) {  
+			e.printStackTrace();  
+			LOGGER.info("Login fallito");
+		return "redirect:/registrazione?error";
 		}
-		return "login";
-	}
+		
+		return"registrazione";
+			
+			
+				
+			}	
+			
+//		if(utenteRepository.findByEmail(email).size()>0) {
+//			// Lo studente è presente nel db			
+//			Utenti utenteAttuale=utenteRepository.findByEmail(email).get(0);			
+//			if(utenteAttuale.getPwd().equals(pwd)) {
+//				session.setAttribute("utenteAttuale", utenteAttuale);
+//				//Se la password è uguale a quella del db, entra
+//				LOGGER.info("Studente loggato");
+//				return "redirect:home";				
+//				}		
+//		  }		
+//		}
+//		return "login";
+	
 	
 	
 	
@@ -146,7 +215,7 @@ public class MainController {
 	        LOGGER.info("Logout effettuato");
 	        
 	    }
-	    return "redirect:/login";  //Where you go after logout here.
+	    return "redirect:/login";  
 	}
 	
 	// ACCESSO HOME UTENTE
@@ -374,7 +443,7 @@ public class MainController {
     	Utenti adminLogin = (Utenti) session.getAttribute("adminLogin");
     	Utenti admin = utenteRepository.findByIdutente(adminLogin.getIdutente());
     	Utenti utente = utenteRepository.findByIdutente(idutente);
-    	System.out.println(utente.getNome());
+    	
     	ModelAndView modificaStudente=new ModelAndView();
         modificaStudente.setViewName("modifica_studente");
        //non stampa il maledetto nome
@@ -383,7 +452,7 @@ public class MainController {
         modificaStudente.addObject("idutente", utente.getIdutente());
         modificaStudente.addObject("nomestudente", utente.getNome());
         modificaStudente.addObject("cognomestudente", utente.getCognome()); 
-        modificaStudente.addObject("emailstudente", utente.getEmail()); 
+        modificaStudente.addObject("emailstudente", utente.getEmail());        
         modificaStudente.addObject("pwdstudente", utente.getPwd()); 
         modificaStudente.addObject("utenti", utenteRepository.visualizzaUtenti()); 
         LOGGER.info("Admin in modifica");
@@ -393,22 +462,60 @@ public class MainController {
        
     // MODIFICA DI UNO STUDENTE SUL DB
     @RequestMapping(value = "modifica_studente", method = RequestMethod.POST)
-    public String post_modifica_studente(@Valid Utenti utenti, @RequestParam(value = "idutente", required = false) Integer idutente, @RequestParam("nome") String nome, @RequestParam("cognome") String cognome,
-    									  @RequestParam("email") String email, @RequestParam(value = "pwd", required = false) String pwd,  BindingResult fields) {
-    	if(fields.hasErrors()) {
- 			return "redirect:/menu_admin";
- 		}
+    public String post_modifica_studente(@Valid Utenti utenti, 
+								    		@RequestParam(value = "idutente", required = false) Integer idutente,
+								    		@RequestParam("nome") String nome, 
+								    		@RequestParam("cognome") String cognome,
+								            @RequestParam("email") String email, 
+    									    @RequestParam(value = "pwd", required = false) String pwd, 
+    									    BindingResult fields)
+    {
+//    	if(fields.hasErrors()) {
+// 			return "redirect:/menu_admin";
+// 		}
     	
-    	Utenti nuovoutente = new Utenti();
-    	nuovoutente.setIdutente(idutente);
-    	nuovoutente.setNome(nome);
-    	nuovoutente.setCognome(cognome);
-    	nuovoutente.setEmail(email);
-    	nuovoutente.setPwd(pwd);
- 		utenteRepository.save(nuovoutente);
- 		LOGGER.info("Utente modificato correttamente");
-        return "visualizza_studente";           
-	}    
+      	String encryptedpassword;
+		try   
+	        {  						
+				/* MessageDigest instance for MD5. */  
+				MessageDigest m = MessageDigest.getInstance("MD5");  
+				m.update(pwd.getBytes()); 
+	        	/* Add plain-text password bytes to digest using MD5 update() method. */ 
+				System.out.println(pwd);				
+				
+				
+				/* Convert the hash value into bytes */   
+				byte[] bytes = m.digest();  	              
+	            /* The bytes array has bytes in decimal form. Converting it into hexadecimal format. */  
+	            StringBuilder s = new StringBuilder();  
+	            for(int i=0; i< bytes.length ;i++) {  
+	            	s.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));  
+	            }  	              
+	            /* Complete hashed password in hexadecimal format */  
+	            encryptedpassword = s.toString(); 		         
+		        /*save user in db */
+	            
+											    	
+	            Utenti nuovoutente = new Utenti();
+	            nuovoutente.setIdutente(idutente);
+	            nuovoutente.setNome(nome);
+	            nuovoutente.setCognome(cognome);
+	            nuovoutente.setEmail(email); 
+	            
+		    	nuovoutente.setPwd(encryptedpassword);
+		    	utenteRepository.save(nuovoutente);
+		    	  
+//		    	if (nuovoutente != null) {
+//		 		utenteRepository.save(nuovoutente);
+		 		LOGGER.info("Utente modificato correttamente");		 		 
+		 			return "redirect:/visualizza_studente";  
+	         	}
+		catch (NoSuchAlgorithmException e) {  
+	        e.printStackTrace();  
+	        LOGGER.info("Utente non modificato");
+			return "redirect:/visualizza_studente";
+		} 
+		} 
     
     
  
