@@ -29,11 +29,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
-
 import com.team2.itsincom.Dao.DomandeDao;
 import com.team2.itsincom.Dao.FeedbackDao;
 import com.team2.itsincom.Dao.UtentiDao;
 import com.team2.itsincom.model.Utenti;
+import com.team2.itsincom.model.DateDiffFeedback;
 import com.team2.itsincom.model.Domande;
 import com.team2.itsincom.model.Feedback;
 import com.team2.itsincom.model.PercFeedback;
@@ -57,7 +57,6 @@ public class MainController {
 	@Autowired
 	FeedbackDao feedbackRepository; 
 	
-	
 	//Template per codice Captcha
 	@Autowired
 	RestTemplate restTemplate;
@@ -77,7 +76,6 @@ public class MainController {
 		String url = "https://www.google.com/recaptcha/api/siteverify";
 		String params = "?secret=6LcmWycjAAAAAL_CPGuBMw7G9MzzVYRjOYGV0joE&response="+captchaResponse;		
 		ReCaptchaResponse reCaptchaResponse = restTemplate.exchange(url+params, HttpMethod.POST,null,ReCaptchaResponse.class).getBody();
-		System.out.println(email);
 	
 		if(fields.hasErrors()) {
 			LOGGER.info("Registrazione fallita");
@@ -136,8 +134,6 @@ public class MainController {
 		return "login";
 	}
 	
-	
-	
 	@RequestMapping(value = "/logout")
 	public String logout(HttpServletRequest request) {
 	    HttpSession session = request.getSession(false);
@@ -151,27 +147,43 @@ public class MainController {
 	
 	// ACCESSO HOME UTENTE
 	@RequestMapping(value = "home", method = RequestMethod.GET)
-	public ModelAndView home(HttpSession session){
+	public String home(Model model,HttpSession session){
 		Utenti utenteAttuale = (Utenti) session.getAttribute("utenteAttuale");
-		Utenti utente = utenteRepository.findByIdutente(utenteAttuale.getIdutente());
-		ModelAndView menuUtente = new ModelAndView();
-		if (utente != null){
-			menuUtente.setViewName("home");
-			menuUtente.addObject("utente",utente);
-			return menuUtente;
-				} else {
-					return null;
+		List<Feedback> checkfeedback = feedbackRepository.checkFeedback(utenteAttuale.getIdutente());
+		if (utenteAttuale != null){
+			model.addAttribute("utente",utenteAttuale);
 				}
+		 //controllo che l'utente abbia già fatto un form
+        //se il risulato è 0 vuole dire che non ha mai fatto un form
+        if (checkfeedback.size() > 0) {
+            //se invece l'ha già fatto controllo quanto tempo fa
+            if (checkfeedback.get(0).getDatediff()>= 7) {
+                return "/home" ;
+            } else {
+            	return "redirect:/aspetta";
+            }
+        } else {
+        	return "/home";
+        }
 			} 
-		
 	
+	@GetMapping("/aspetta") 
+	public String aspetta(Model model,HttpSession session) {
+		LOGGER.info("Utente in attesa");
+		Utenti utenteAttuale = (Utenti) session.getAttribute("utenteAttuale");
+		List<Feedback> checkfeedback = feedbackRepository.checkFeedback(utenteAttuale.getIdutente());
+		checkfeedback.get(0).setDatediff(7 - checkfeedback.get(0).getDatediff());
+		Feedback giornimancanti = new Feedback(checkfeedback.get(0).getIdfeedback(), checkfeedback.get(0).getVoto(), checkfeedback.get(0).getDatafeedback(), utenteAttuale, null,checkfeedback.get(0).getDatediff());
+		model.addAttribute("utente",utenteAttuale);
+		model.addAttribute("giornimancanti",giornimancanti);
+		return "/aspetta";				
+	}
 	
 	// MODULO UTENTE
 	@GetMapping("/modulo") 
 	public String modulo(Model model,HttpSession session) {
 		LOGGER.info("Utente in modulo");
 		Utenti utenteAttuale = (Utenti) session.getAttribute("utenteAttuale");
-		//System.out.println(utenteAttuale.getIdutente());
 		//scelta domanda 1
 		Domande domanda1 = domandaRepository.domanda1Random();
 		model.addAttribute("domanda1",domanda1);
@@ -187,10 +199,7 @@ public class MainController {
 		
 		return "/modulo";				
 	}
-	
-	
-	
-	
+
 	
 	// CODICE PER LE FUNZIONI DELL'ADMIN
     
@@ -374,7 +383,6 @@ public class MainController {
     	Utenti adminLogin = (Utenti) session.getAttribute("adminLogin");
     	Utenti admin = utenteRepository.findByIdutente(adminLogin.getIdutente());
     	Utenti utente = utenteRepository.findByIdutente(idutente);
-    	System.out.println(utente.getNome());
     	ModelAndView modificaStudente=new ModelAndView();
         modificaStudente.setViewName("modifica_studente");
        //non stampa il maledetto nome
