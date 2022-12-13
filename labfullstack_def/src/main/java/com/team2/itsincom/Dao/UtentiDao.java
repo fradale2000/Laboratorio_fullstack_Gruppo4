@@ -29,7 +29,7 @@ public interface UtentiDao extends CrudRepository <Utenti, Integer> {
 	@Query(value = "UPDATE utenti AS u SET u.pwd=:pwd WHERE u.email=:email", nativeQuery = true)
 	public int registrazione(@Param("email") String email,@Param("pwd") String pwd);
 
-	@Query(value = "select s from Utente s where email= :email and pwd = :pwd")
+	@Query(value = "select s from Utenti s where email= :email and pwd = :pwd")
 	public Utenti login(@Param(value = "email") String email,@Param(value = "pwd") String pwd) ;
 	
 	@Query(value="SELECT * FROM utenti",nativeQuery=true)
