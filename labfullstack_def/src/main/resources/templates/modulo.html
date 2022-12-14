@@ -10,17 +10,20 @@
     <title>Questionario</title>
     <style>
     .box {
-      display: flex;      
+      display: flex;
+      justify-content: center; 
+      align-items: center;        
     }
 
     .nome {     
-      padding-top: 2%;
-      padding-right: 5%;    
+      justify-content: center;
+        padding-top: 5%;
+        padding-right: 6%;    
     }
 
-    #primadomanda {      
-      margin-left: 29%;
-    }    
+    .principale {
+        justify-content: center;
+    }  
     </style>
         
 </head>
@@ -42,17 +45,18 @@
 
    <!-- Parte css per il form che quindi è da moficare con le robe di thyme-leaf, da aggiungere name e id-->
    <section class="hero is-light is-mobile">       
-    <div class="hero-body is-mobile is-fluid">               
-      
-        <div class="column is-9-desktop  is-2-mobile is-center container ">
-          <div class="column has-background-link"> 
+    <div class="hero-body is-mobile is-fluid">                     
+        <div class="column is-three-quarters is-center container ">
+
+
+          <div class="column has-background-link has-text-centered "> 
 
             <!-- Testo della domanda 1-->
             <h3 th:text=${domanda1.testodomanda} class="title has-text-white has-text-centered"></h3>
               <p hidden id = "domanda1"  th:text = ${domanda1.iddomanda} ></p>
 
-            <!-- div per una singola domanda-->
-            <div class="box is-5-mobile has-text-centered">  
+            <!-- div per la prima domanda-->
+            <div class="box column principale">  
               
               <!-- Primo valore-->
               <div class="has-text-centered nome" id="primadomanda">              
@@ -94,7 +98,7 @@
             
 
             <!-- Testo della DOMANDA 2-->
-            <h3 th:text=${domanda2.testodomanda} class="title has-text-white has-text-centered"></h3>
+            <h3 th:text=${domanda2.testodomanda} class="title has-text-white has-text-centered">Ciao</h3>
               <p hidden id = "domanda2"  th:text = ${domanda2.iddomanda} ></p>
 
             <!-- div per una singola domanda-->
@@ -228,8 +232,8 @@
          </div>
          <!-- fine div per una domanda + risposta -->
           <!--INVIO MODULO-->
-			
-			<button class="button has-background-light has-text-info is-medium is-responsive has-text-centered" type="submit"  th:onclick = "invia_modulo()"> <strong> Invia risposte </strong> </button>
+			 
+      <button class="button has-background-light has-text-info is-medium is-responsive is-center has-text-centered" type="submit"  th:onclick = "invia_modulo()"> <strong> Invia risposte </strong> </button>
           
         </div>
       </div>
@@ -302,7 +306,7 @@
                   +"&risposta3="+lista_valori_domanda3[0]+"&risposta4="+lista_valori_domanda4[0],
                     type: "post",
                     success:function(data){
-        window.location = "/ringraziamenti";
+        window.location = "/home";
                     }
                 });
   }
