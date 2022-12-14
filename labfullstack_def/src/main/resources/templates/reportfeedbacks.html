@@ -8,6 +8,7 @@
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="https://kit.fontawesome.com/03b6de6df8.js" crossorigin="anonymous"></script>
     <title>Report questionari</title>
+    
     <style>
     .box {
       display: flex; 
@@ -15,25 +16,15 @@
       align-items: center;     
     }
 
-    .nome {
-        
+    .nome {        
       justify-content: center;
         padding-top: 5%;
         padding-right: 6%;
     }
 
-    
-
     .principale {
         justify-content: center;
-    }
-
-
-    
-    
-    
-
-       
+    }       
     </style>
         
 </head>
@@ -52,15 +43,10 @@
         </div>
       </section>
 
-
-
    <!-- Parte css per il form che quindi è da moficare con le robe di thyme-leaf, da aggiungere name e id-->
    <section class="hero is-light is-mobile">       
     <div class="hero-body is-mobile is-fluid">         
         <div class="column is-three-quarters is-center container">
-
-
-
 
             <!-- INIZIO CONTAINER BLU  -->
             <div class="column has-background-link  "> 
@@ -68,8 +54,7 @@
                 <br>                    
                 <th:block th:each="percentuali:${listapercentuali}">
  			        <h2  class="title has-text-white has-text-centered" th:text=${percentuali.testodomanda}></h2><br>            
-                    
-                    
+                                     
                     <!-- INZIO CONTAINER BIANCO-->  
                       
                     <div class="box column principale">

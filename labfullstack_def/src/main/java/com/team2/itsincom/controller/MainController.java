@@ -111,7 +111,7 @@ public class MainController {
 				// La password dello studente non è impostata				
 				utenteRepository.registrazione(email, encryptedpassword);
 				LOGGER.info("Registrazione confermata");
-				return "login";
+				return "redirect:/login";
 			} else {
 				LOGGER.info("Registrazione fallita");
 	        	return "redirect:/registrazione?error";  
@@ -123,7 +123,7 @@ public class MainController {
             e.printStackTrace();  
         }
 	LOGGER.info("Registrazione fallita");
-	return "redirect:/login";  	          
+	return "redirect:/registrazione";  	          
      } 
 
 	
@@ -254,8 +254,10 @@ public class MainController {
 	// MODULO UTENTE
 	@GetMapping("/modulo") 
 	public String modulo(Model model,HttpSession session) {
-		LOGGER.info("Utente in modulo");
+		
 		Utenti utenteAttuale = (Utenti) session.getAttribute("utenteAttuale");
+		if (utenteAttuale != null){
+		LOGGER.info("Utente in modulo");
 		//scelta domanda 1
 		Domande domanda1 = domandaRepository.domanda1Random();
 		model.addAttribute("domanda1",domanda1);
@@ -270,7 +272,10 @@ public class MainController {
 		model.addAttribute("domanda4",domanda4);
 		
 		return "/modulo";				
-	}
+		}  else {
+		return "redirect:/error";
+			}
+		}
 
 	
 	// CODICE PER LE FUNZIONI DELL'ADMIN
@@ -309,79 +314,87 @@ public class MainController {
 	@GetMapping("/reportfeedbacks") 
 	public String reportfeedbacks(Model model,HttpSession session) {
 		Utenti adminLogin = (Utenti) session.getAttribute("adminLogin");
-		LOGGER.info("Admin in reportfeedbacks");
-		//prendo tutte le domande e le stampo nell'html
-		List <Domande> listadomande = domandaRepository.listadomande();
-		//lista da far visualizzare nell'HTML
-		List <PercFeedback> listapercentuali = new ArrayList<>();
-		for (int i = 0; i < listadomande.size(); i++) {
-			Domande domandacorrente = listadomande.get(i);
-			PercFeedback percentuali = new PercFeedback();
-			percentuali.setTestodomanda(domandacorrente.getTestodomanda());
-			//prendo tuttle le risposte alla determinata domanda
-			int nrisposte = feedbackRepository.numeroRisposteadomanda(domandacorrente.getIddomanda());
-			percentuali.setNrisposte(nrisposte);
-			//prendo il determinato voto della determinata domanda
-			int voto_1 = feedbackRepository.numeroVotiperdomanda(domandacorrente.getIddomanda(), 1);
-			int voto_2 = feedbackRepository.numeroVotiperdomanda(domandacorrente.getIddomanda(), 2);
-			int voto_3 = feedbackRepository.numeroVotiperdomanda(domandacorrente.getIddomanda(), 3);
-			int voto_4 = feedbackRepository.numeroVotiperdomanda(domandacorrente.getIddomanda(), 4);
-			//calcolo la percentuale dei voti per domanda
-			if (voto_1 == 0) {
-				int percvoto1 = 0;
-				model.addAttribute("perc_v_1",percvoto1);
-				percentuali.setPerc_voto_1(percvoto1);
-			} else {
-				int percvoto1 = (100 * voto_1)/nrisposte;
-				percentuali.setPerc_voto_1(percvoto1);
-			}
-			
-			if (voto_2 == 0) {
-				int percvoto2 = 0;
-				percentuali.setPerc_voto_2(percvoto2);
-			} else {
-				int percvoto2 = (100 * voto_2)/nrisposte;
-				percentuali.setPerc_voto_2(percvoto2);
-			}
-			
-			if (voto_3 == 0) {
-				int percvoto3 = 0;
-				percentuali.setPerc_voto_3(percvoto3);
-			} else {
-				int percvoto3 = (100 * voto_3)/nrisposte;
-				percentuali.setPerc_voto_3(percvoto3);
-			}
-			
-			if (voto_4 == 0) {
-				int percvoto4 = 0;
-				percentuali.setPerc_voto_4(percvoto4);
-			} else {
-				int percvoto4 = (100 * voto_4)/nrisposte;
-				percentuali.setPerc_voto_4(percvoto4);
-			}	
-			//calcolo media
-			int media = ((1 *voto_1) + (2 *voto_2) + (3 *voto_3) + (4 *voto_4) )/nrisposte;
-			switch (media) {
-			case 1:
-				percentuali.setMedia("NON SODDISFATTI");
-				break;
-			case 2:
-				percentuali.setMedia("POCO SODDISFATTI");
-				break;
-			case 3:
-				percentuali.setMedia("ABBASTANZA SODDISFATTI");
-				break;
-			case 4:
-				percentuali.setMedia("MOLTO SODDISFATTI");
-				break;
-			default:
-				percentuali.setMedia("Non calcolabile");
-			}
-			listapercentuali.add(percentuali);
-		}
-		model.addAttribute("listapercentuali",listapercentuali);
 		
-		return "reportfeedbacks";				
+		if (adminLogin != null){
+			
+									
+			LOGGER.info("Admin in reportfeedbacks");
+			//prendo tutte le domande e le stampo nell'html
+			List <Domande> listadomande = domandaRepository.listadomande();
+			//lista da far visualizzare nell'HTML
+			List <PercFeedback> listapercentuali = new ArrayList<>();
+			for (int i = 0; i < listadomande.size(); i++) {
+				Domande domandacorrente = listadomande.get(i);
+				PercFeedback percentuali = new PercFeedback();
+				percentuali.setTestodomanda(domandacorrente.getTestodomanda());
+				//prendo tuttle le risposte alla determinata domanda
+				int nrisposte = feedbackRepository.numeroRisposteadomanda(domandacorrente.getIddomanda());
+				percentuali.setNrisposte(nrisposte);
+				//prendo il determinato voto della determinata domanda
+				int voto_1 = feedbackRepository.numeroVotiperdomanda(domandacorrente.getIddomanda(), 1);
+				int voto_2 = feedbackRepository.numeroVotiperdomanda(domandacorrente.getIddomanda(), 2);
+				int voto_3 = feedbackRepository.numeroVotiperdomanda(domandacorrente.getIddomanda(), 3);
+				int voto_4 = feedbackRepository.numeroVotiperdomanda(domandacorrente.getIddomanda(), 4);
+				//calcolo la percentuale dei voti per domanda
+				if (voto_1 == 0) {
+					int percvoto1 = 0;
+					model.addAttribute("perc_v_1",percvoto1);
+					percentuali.setPerc_voto_1(percvoto1);
+				} else {
+					int percvoto1 = (100 * voto_1)/nrisposte;
+					percentuali.setPerc_voto_1(percvoto1);
+				}
+				
+				if (voto_2 == 0) {
+					int percvoto2 = 0;
+					percentuali.setPerc_voto_2(percvoto2);
+				} else {
+					int percvoto2 = (100 * voto_2)/nrisposte;
+					percentuali.setPerc_voto_2(percvoto2);
+				}
+				
+				if (voto_3 == 0) {
+					int percvoto3 = 0;
+					percentuali.setPerc_voto_3(percvoto3);
+				} else {
+					int percvoto3 = (100 * voto_3)/nrisposte;
+					percentuali.setPerc_voto_3(percvoto3);
+				}
+				
+				if (voto_4 == 0) {
+					int percvoto4 = 0;
+					percentuali.setPerc_voto_4(percvoto4);
+				} else {
+					int percvoto4 = (100 * voto_4)/nrisposte;
+					percentuali.setPerc_voto_4(percvoto4);
+				}	
+				//calcolo media
+				int media = ((1 *voto_1) + (2 *voto_2) + (3 *voto_3) + (4 *voto_4) )/nrisposte;
+				switch (media) {
+				case 1:
+					percentuali.setMedia("NON SODDISFATTI");
+					break;
+				case 2:
+					percentuali.setMedia("POCO SODDISFATTI");
+					break;
+				case 3:
+					percentuali.setMedia("ABBASTANZA SODDISFATTI");
+					break;
+				case 4:
+					percentuali.setMedia("MOLTO SODDISFATTI");
+					break;
+				default:
+					percentuali.setMedia("Non calcolabile");
+				}
+				listapercentuali.add(percentuali);
+			}
+			model.addAttribute("listapercentuali",listapercentuali);
+			
+			return "reportfeedbacks";	
+			}
+		else {
+			return "redirect:/error";
+		}
 	}
 	
 	
@@ -486,39 +499,17 @@ public class MainController {
     									    @RequestParam(value = "pwd", required = false) String pwd, 
     									    BindingResult fields)
     {
-//    	if(fields.hasErrors()) {
-// 			return "redirect:/menu_admin";
-// 		}
+    	if(fields.hasErrors()) { 			
+    		return "redirect:/menu_admin";
+ 		}
     	
-      	String encryptedpassword;
-		try   
-	        {  						
-				/* MessageDigest instance for MD5. */  
-				MessageDigest m = MessageDigest.getInstance("MD5");  
-				m.update(pwd.getBytes()); 
-	        	/* Add plain-text password bytes to digest using MD5 update() method. */ 
-				System.out.println(pwd);				
-				
-				
-				/* Convert the hash value into bytes */   
-				byte[] bytes = m.digest();  	              
-	            /* The bytes array has bytes in decimal form. Converting it into hexadecimal format. */  
-	            StringBuilder s = new StringBuilder();  
-	            for(int i=0; i< bytes.length ;i++) {  
-	            	s.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));  
-	            }  	              
-	            /* Complete hashed password in hexadecimal format */  
-	            encryptedpassword = s.toString(); 		         
-		        /*save user in db */
-	            
-											    	
+      		            											    	
 	            Utenti nuovoutente = new Utenti();
 	            nuovoutente.setIdutente(idutente);
 	            nuovoutente.setNome(nome);
 	            nuovoutente.setCognome(cognome);
-	            nuovoutente.setEmail(email); 
-	            
-		    	nuovoutente.setPwd(encryptedpassword);
+	            nuovoutente.setEmail(email); 	            
+		    	nuovoutente.setPwd(pwd);
 		    	utenteRepository.save(nuovoutente);
 		    	  
 //		    	if (nuovoutente != null) {
@@ -526,12 +517,8 @@ public class MainController {
 		 		LOGGER.info("Utente modificato correttamente");		 		 
 		 			return "redirect:/visualizza_studente";  
 	         	}
-		catch (NoSuchAlgorithmException e) {  
-	        e.printStackTrace();  
-	        LOGGER.info("Utente non modificato");
-			return "redirect:/visualizza_studente";
-		} 
-		} 
+
+		
     
     
  

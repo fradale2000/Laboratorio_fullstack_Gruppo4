@@ -17,9 +17,10 @@
       <div class="column is-8 is-offset-2">
         <h3 class="title has-text-white"> Mi dispiace, <strong th:text="${utente.nome}"></strong></h3>
             <hr class="login-hr">
-            <p class="has-text-white">Hai già complitato IL questionario! </p> 
+            <p class="subtitle has-text-white">Hai già completato il questionario! </p> 
             <br> 
-            <strong class="has-text-white" th:text="${'Devi aspettare '+ giornimancanti.datediff+' giorni per ricompilare il form'}" ></strong><br>
+          	          
+            <h3 class="subtitle has-text-white has-text-centered"> Devi aspettare  <strong class="has-text-white" th:text="${giornimancanti.datediff}"></strong> giorni per ricompilare il form</h3>
             <br>
             <button class="button has-background-light has-text-info is-medium is-responsive"> <strong> <a href ="/logout"> Logout</a> </strong></button>
         </div>
