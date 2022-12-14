@@ -37,10 +37,7 @@ public interface FeedbackDao extends CrudRepository <Feedback, Long> {
 	public int numeroVotiperdomanda(int iddomanda, int voto );
 	
 	//query per prendere il numero di risposte alla determinata domanda con determinato voto
-	@Query(value="SELECT idfeedback,voto,datafeedback,idutente,iddomanda FROM `feedbacks` WHERE (idutente = :idutente AND datediff(sysdate(),datafeedback) = 7) GROUP by idutente;",nativeQuery = true)
-	public List <DateDiffFeedback> checkFeedback(int idutente);
+	@Query(value ="SELECT idfeedback,voto,datafeedback,idutente,iddomanda, datediff(sysdate(),datafeedback) as datediff FROM feedbacks WHERE idutente = :idutente order by datafeedback DESC;",nativeQuery = true)
+	public List <Feedback> checkFeedback(int idutente);
 	
-	
-
-
 }

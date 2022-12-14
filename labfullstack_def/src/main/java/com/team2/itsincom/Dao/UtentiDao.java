@@ -9,7 +9,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import com.team2.itsincom.model.Utenti;
 
 public interface UtentiDao extends CrudRepository <Utenti, Integer> {
@@ -31,9 +30,11 @@ public interface UtentiDao extends CrudRepository <Utenti, Integer> {
 	public int registrazione(@Param("email") String email,@Param("pwd") String pwd);
 
 
+
     @Query(value = "select s from Utenti s where email= :email and pwd = :pwd")
 	public Utenti login(@Param(value = "email") String email,@Param(value = "pwd") String pwd) ;
     
+
 	
 	@Query(value="SELECT * FROM utenti",nativeQuery=true)
  	public Collection <Utenti> visualizzaUtenti();
