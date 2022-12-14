@@ -232,9 +232,9 @@
          </div>
          <!-- fine div per una domanda + risposta -->
           <!--INVIO MODULO-->
-			 
+			 <br>
       <button class="button has-background-light has-text-info is-medium is-responsive is-center has-text-centered" type="submit"  th:onclick = "invia_modulo()"> <strong> Invia risposte </strong> </button>
-          
+          <br><br><br><br>
         </div>
       </div>
     </div>
@@ -306,7 +306,7 @@
                   +"&risposta3="+lista_valori_domanda3[0]+"&risposta4="+lista_valori_domanda4[0],
                     type: "post",
                     success:function(data){
-        window.location = "/home";
+        window.location = "/ringraziamenti";
                     }
                 });
   }
