@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <script src="https://kit.fontawesome.com/03b6de6df8.js" crossorigin="anonymous"></script>
+    <title>Inserimento studente</title>
+</head>
+<body>
+  
+
+  <div class="is-fullwidth">
+   <!-- Parte css per l'intestazione-->
+  <section class="hero is-link is-bold">
+    <div class="hero-body">
+      <div class="container has-text-centered">
+        <h3 class="title has-text-white"> Inserisci un nuovo studente </h3>
+        <hr class="login-hr">
+        <p class="subtitle has-text-white">Inserisci le credenziali</p> 
+        <p class="has-text-white has-text-centered"><a href="/menu_admin" ><u><strong>Torna indietro </strong> </u> </a>  <p>            
+      </div>
+    </div>
+  </section>
+
+   <!-- Parte css per il form che quindi è da moficare con le robe di thyme-leaf, da aggiungere name e id-->
+  <section class="hero is-light ">       
+    <div class="hero-body">               
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-5-tablet is-4-desktop is-3-widescreen">  
+ 
+            <form action="inserisci_studente" method="post" class="box has-background-info ">  
+                                                                
+              <div class="field">
+                <label for="" class="label">Nome</label>                
+                <input type="text" id="nome" name="nome" placeholder="Nome studente" class="input" required>                    
+              </div>
+              <div class="field">
+                <label for="" class="label">Cognome</label>
+                <input type="text" id="cognome" name="cognome" placeholder="Cognome studente" class="input" required>                     
+              </div>                            
+              <div class="field">
+                <label for="email" class="label">Email</label>
+                <input type="email" id="email" name="email" placeholder="nome.cognome@scuola.it" class="input" required>                     
+              </div>
+              <br>
+              <div class="field has-text-centered" >                   
+                <button type="submit" value="Inserisci" class="button has-background-light has-text-info"><strong> Inserisci</strong> </button>
+              </div>                    
+              <br><br>                      
+             
+               <!--  Bottone -->
+              </form>
+              
+          </div>
+          <p class="has-text-light">Ciao ciao cia</p>
+          
+          <div class="column is-5-tablet is-4-desktop is-3-widescreen  "> 
+            <h4 class="title has-text-black has-text-centered"> Registro elettronico </h4> 
+           <p class="has-text-centered"> <strong>N</strong>= Nome &nbsp&nbsp<strong>C</strong>= Cognome &nbsp&nbsp <strong>E</strong>= Email </p>
+            <br>
+              <br> 
+            <div class="columns  is-mobile is-centered">   
+            <table class="table is-hoverable is-narrow-mobile">
+              <tr class="is-selected has-background-link is-fullwidth">
+                <th>N</th>
+                <th>C</th>
+                <th>E</th>
+              </tr>        
+              
+              <th:block th:each="u:${utenti}"> 
+        <tr>
+          <td> <small th:text = "${u.getNome()}"> </small></td>
+          <td> <small th:text = "${u.getCognome()}"></small></td>
+      
+      	<td> <small th:text="${u.getEmail}"></small> </td>
+        </tr> 
+        </th:block> 
+             
+            </table> 
+            </div> 
+          </div>   
+        </div>
+        
+      </div>
+<br>
+      
+    
+    </div>  
+  </section>
+      
+   <!-- Footer -->
+    <section class="hero is-light is-bold">
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <h4 class="title is-5 has-text-info">Registro Elettronico</h4>
+          <p> by Cecilia Baccolo, Samira Boutabt, Francesco D'Alessandro, Mohamed Osman<br> Emit Feltrinelli, 2022 </p>
+        </div>
+      </div>
+    </section>
+  </div>   
+</body>
+</html>

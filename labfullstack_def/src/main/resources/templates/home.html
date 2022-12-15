@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <script src="https://kit.fontawesome.com/03b6de6df8.js" crossorigin="anonymous"></script>
+    <title>Homepage</title>
+</head>
+<body>
+  
+
+<div class="hero is-fullheight is-info">
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <div class="column is-8 is-offset-2">
+      <p class="has-text-white has-text-centered"><a href="/logout" ><u><strong> Logout </strong> </u> </a>  <p> 
+        <h3 class="title has-text-white"> Buongiorno, <strong th:text="${utente.nome}"></strong></h3>
+            <hr class="login-hr">
+            <p class="subtitle has-text-white">Ti chiediamo gentilmente di compilare il questionario anonimo. <br> Ti prenderà solo 2 minuti!<br></p>
+            <button class="button has-background-light has-text-info is-medium is-responsive"> <strong> <a href ="/modulo"> Inizia il modulo</a> </strong></button>
+        </div>
+    </div>
+  </div>
+</div>

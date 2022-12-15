@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="https://kit.fontawesome.com/03b6de6df8.js" crossorigin="anonymous"></script>
+    <title>Report questionari</title>
+    
+    <style>
+    .box {
+      display: flex; 
+      justify-content: center; 
+      align-items: center;     
+    }
+
+    .nome {        
+      justify-content: center;
+        padding-top: 5%;
+        padding-right: 6%;
+    }
+
+    .principale {
+        justify-content: center;
+    }       
+    </style>
+        
+</head>
+<body>
+
+   <!-- Parte css per l'intestazione-->
+    <section class="hero is-link is-bold">
+        <div class="hero-body">
+          <div class="container has-text-centered">
+            
+            <h3 class="title has-text-white has-text-centered"> Report dei questionari </h3>
+    <hr class="login-hr">
+    <p class="subtitle has-text-white"> Ricorda che gli studenti possono fare 1 modulo ogni 7 giorni</p>
+    <p class="has-text-white has-text-centered"><a href="/menu_admin" ><u><strong>Torna indietro </strong> </u> </a>  <p> 
+          </div>
+        </div>
+      </section>
+
+   <!-- Parte css per il form che quindi è da moficare con le robe di thyme-leaf, da aggiungere name e id-->
+   <section class="hero is-light is-mobile">       
+    <div class="hero-body is-mobile is-fluid">         
+        <div class="column is-three-quarters is-center container">
+
+            <!-- INIZIO CONTAINER BLU  -->
+            <div class="column has-background-link  "> 
+                <!-- TESTO DELLA DOMANDA-->  
+                <br>                    
+                <th:block th:each="percentuali:${listapercentuali}">
+ 			        <h2  class="title has-text-white has-text-centered" th:text=${percentuali.testodomanda}></h2><br>            
+                                     
+                    <!-- INZIO CONTAINER BIANCO-->  
+                      
+                    <div class="box column principale">
+
+                        <!-- Primo valore-->
+                        <div class="has-text-centered nome">              
+                            <span class="icon">
+                            <i class="fa-regular fa-4x fa-face-frown"></i> 
+                            </span><br><br>
+                            <p class="title" id="v_1" th:text= "${percentuali.perc_voto_1 + '%'}" ><strong>20%</strong></p>         
+                            <label for="v_1"><strong>Non <br> soddisfatto </strong> </label>
+                        </div>
+                        
+                         <!-- Secondo valore-->
+                        <div class="has-text-centered nome">
+                            <span class="icon">
+                            <i class="fa-regular fa-4x fa-face-meh"></i>
+                            </span><br><br>
+                            <p class="title"  id="v_2" th:text= "${percentuali.perc_voto_2 + '%'}" ><strong>32</strong></p>
+                            <label for="v_2"> <strong> Poco <br> soddisfatto </strong></label>
+                        </div>
+                
+                        <!-- Terzo valore-->
+                        <div class="has-text-centered nome">
+                            <span class="icon">
+                            <i class="fa-regular fa-4x fa-face-smile"></i>
+                            </span><br><br>
+                            <p class="title" id="v_3" th:text= "${percentuali.perc_voto_3 + '%'}" ><strong>32</strong></p>
+                            <label for="v_3"> <strong>Abbastanza <br> soddisfatto </strong> </label>      
+                        </div>
+                
+                        <!-- Quarto valore-->
+                        <div class="has-text-centered nome">
+                            <span class="icon">                 
+                            <i class="fa-regular fa-face-laugh fa fa-4x"></i>
+                            </span><br><br>
+                            <p class="title" id="v_4" th:text= "${percentuali.perc_voto_4 + '%'}" ><strong>32</strong></p>
+                            <label for="v_4"> <strong>Molto <br> soddisfatto</strong> </label>
+                        </div>                    
+                    </div><!-- FINE CONTAINER BIANCO-->
+
+                    <h3 class="subtitle has-text-white has-text-centered"> Gli utenti sono mediamente  <strong class="has-text-white" th:text="${percentuali.media}"></strong> su  <strong  class="has-text-white" th:text="${percentuali.nrisposte}"></strong> risposte </h3>
+                    <hr>
+                    
+                </th:block>               
+            </div>  <!-- FINE CONTAINER BLU-->       
+        </div>
+    </div>        
+    </section>
+
+      
+   <!-- Footer -->
+      <section class="hero is-light is-bold">
+        <div class="hero-body">
+          <div class="container has-text-centered">
+            <h4 class="title is-5 has-text-info">Registro Elettronico</h4>
+            <p>
+            by Cecilia Baccolo, Samira Boutabt, Francesco D'Alessandro, Mohamed Osman<br>
+             Emit Feltrinelli, 2022             
+          </p>
+          </div>
+        </div>
+      </section>
+
+</body>
+</html>

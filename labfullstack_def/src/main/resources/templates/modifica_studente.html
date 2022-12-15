@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <script src="https://kit.fontawesome.com/03b6de6df8.js" crossorigin="anonymous"></script>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <title>Modifica studente</title>
+</head>
+<body>
+
+   <!-- Parte css per l'intestazione-->
+  <section class="hero is-link is-bold">
+    <div class="hero-body">
+      <div class="container has-text-centered">
+        <h3 class="title has-text-white"> Modifica uno studente </h3>
+        <hr class="login-hr">
+        <p class="subtitle has-text-white">Riempi i campi</p>
+        <p class="has-text-white has-text-centered"><a href="/menu_admin" ><u><strong>Torna indietro </strong> </u> </a>  <p>                      
+      </div>
+    </div>
+  </section>
+
+   <!-- Parte css per il form che quindi è da moficare con le robe di thyme-leaf, da aggiungere name e id-->
+  <section class="hero is-light ">       
+    <div class="hero-body">               
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-5-tablet is-4-desktop is-3-widescreen">  
+ 
+            <form th:action="@{/modifica_studente}" th:object="${utenti}" method="post" class="box has-background-info ">  
+                         
+              <br>
+  				<p hidden id ="idutente" th:text="${idutente}"></p>
+              <div class="field">
+                <label for="" class="label">Nome</label>                
+                    <input type="text" id="nome" name="nome" th:value="${nomestudente}" class="input" required>                    
+              </div>
+              <div class="field">
+                <label for="" class="label">Cognome</label>
+                <input type="text" id="cognome" name="cognome" th:value="${cognomestudente}" class="input" required>                     
+              </div>                            
+              <div class="field">
+                <label for="email" class="label">Email</label>
+                <input type="email" id="email" name="email" th:value="${emailstudente}" class="input" required >                     
+              </div>
+              
+              <div class="field">
+                <label for="password" class="label">Password</label>
+                <input type="text"  id="pwd" th:value="${pwdstudente}" class="input" required >                    
+              </div>
+              <br>
+              <div class="field has-text-centered" >                   
+                <button type="submit" value="Modifica" class="button has-background-light has-text-info" th:onclick= "modifica_utente()"> <strong> Modifica </strong></button>
+              </div>
+              
+              
+                                       
+              <!--  Bottone -->
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+      
+   <!-- Footer -->
+    <section class="hero is-light is-bold">
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <h4 class="title is-5 has-text-info">Registro Elettronico</h4>
+          <p> by Cecilia Baccolo, Samira Boutabt, Francesco D'Alessandro, Mohamed Osman<br> Emit Feltrinelli, 2022 </p>
+        </div>
+      </div>
+    </section>
+    <script>
+                function modifica_utente(){
+                    	
+                   //ID delle domande    
+				   let idutente = document.getElementById("idutente").innerHTML;
+				   let nome = document.getElementById("nome").value;
+				   let cognome = document.getElementById("cognome").value;
+				   let email = document.getElementById("email").value;
+				   let pwd = document.getElementById("pwd").value;
+					//controllo se tutte le domande hanno una risposta
+// 					if(nome != "" && cognome != "" && email != "" && pwd != "" )
+// 					{
+						//chiamata ajax per inviare tutti i dati al controller
+	                  	$.ajax({
+	                          url:"/modifica_studente?idutente="+idutente+"&nome="+nome+"&cognome="+cognome+"&email="+email 
+	                          	+"&pwd="+pwd,
+	                          type: "post",
+	                          success:function(data){
+								window.location = "/visualizza_studente";
+	                          }
+	                      });
+// 					}
+// 					else{
+// 						alert("E' obbligatorio rimepire tutti i campi");
+// 					}
+                }
+							                  
+       	</script>
+</body>
+</html>

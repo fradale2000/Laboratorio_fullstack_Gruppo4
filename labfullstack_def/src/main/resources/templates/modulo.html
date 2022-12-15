@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="https://kit.fontawesome.com/03b6de6df8.js" crossorigin="anonymous"></script>
+    <title>Questionario</title>
+    <style>
+    .box {
+      display: flex;
+      justify-content: center; 
+      align-items: center;        
+    }
+
+    .nome {     
+      justify-content: center;
+        padding-top: 5%;
+        padding-right: 6%;    
+    }
+
+    .principale {
+        justify-content: center;
+    }  
+    </style>
+        
+</head>
+<body>
+
+   <!-- Parte css per l'intestazione-->
+    <section class="hero is-link is-bold">
+        <div class="hero-body">
+          <div class="container has-text-centered">
+            
+            <h3 class="title has-text-white has-text-centered"> Questionario </h3>
+    <hr class="login-hr">
+    <p class="subtitle has-text-white"> Compila tutti i campi</p>
+          </div>
+        </div>
+      </section>
+
+
+
+   <!-- Parte css per il form che quindi è da moficare con le robe di thyme-leaf, da aggiungere name e id-->
+   <section class="hero is-light is-mobile">       
+    <div class="hero-body is-mobile is-fluid">                     
+        <div class="column is-three-quarters is-center container ">
+
+
+          <div class="column has-background-link has-text-centered "> 
+
+            <!-- Testo della domanda 1-->
+            <h3 th:text=${domanda1.testodomanda} class="title has-text-white has-text-centered"></h3>
+              <p hidden id = "domanda1"  th:text = ${domanda1.iddomanda} ></p>
+
+            <!-- div per la prima domanda-->
+            <div class="box column principale">  
+              
+              <!-- Primo valore-->
+              <div class="has-text-centered nome" id="primadomanda">              
+                <span class="icon">
+                  <i class="fa-regular fa-4x fa-face-frown"></i>                  
+                </span><br><br>
+                <input type="radio" id="domanda1_v1" name="risposte_domanda1" value="1">
+                <label for="checkbox1"><br> <strong>Non <br> soddisfatto </strong></label>
+              </div>
+                        
+              <!-- Secondo valore-->
+              <div class="has-text-centered nome">
+                <span class="icon">
+                  <i class="fa-regular fa-4x fa-face-meh"></i>
+                </span><br><br>
+                <input type="radio" id="domanda1_v2" name="risposte_domanda1" value="2"><br>
+                <label for="checkbox2"> <strong> Poco <br> soddisfatto </strong></label>
+              </div>
+              
+              <!-- Terzo valore-->
+              <div class="has-text-centered nome">
+                <span class="icon">
+                  <i class="fa-regular fa-4x fa-face-smile"></i>
+                </span><br><br>
+                <input type="radio" id="domanda1_v3" name="risposte_domanda1" value="3"><br>
+                <label for="checkbox3"> <strong>Abbastanza <br> soddisfatto </strong> </label>      
+              </div>
+              
+              <!-- Quarto valore-->
+              <div class="has-text-centered nome">
+                <span class="icon">                 
+                  <i class="fa-regular fa-face-laugh fa fa-4x"></i>
+                </span><br><br>
+                <input type="radio" id="domanda1_v4" name="risposte_domanda1" value="4"><br>
+                <label for="checkbox4"> <strong>Molto <br> soddisfatto</strong> </label>
+              </div>
+            </div>
+            <!-- fine div per una domanda + risposta -->
+            
+
+            <!-- Testo della DOMANDA 2-->
+            <h3 th:text=${domanda2.testodomanda} class="title has-text-white has-text-centered">Ciao</h3>
+              <p hidden id = "domanda2"  th:text = ${domanda2.iddomanda} ></p>
+
+            <!-- div per una singola domanda-->
+            <div class="box is-5-mobile has-text-centered">  
+              
+              <!-- Primo valore-->
+              <div class="has-text-centered nome" id="primadomanda">              
+                <span class="icon">
+                  <i class="fa-regular fa-4x fa-face-frown"></i> 
+                </span><br><br>
+                <input type="radio" id="domanda2_v1" name="risposte_domanda2" value="1">
+                <label for="checkbox1"><br><strong> Non <br> soddisfatto </strong></label>
+              </div>
+                        
+              <!-- Secondo valore-->
+              <div class="has-text-centered nome">
+                <span class="icon">
+                  <i class="fa-regular fa-4x fa-face-meh"></i>
+                </span><br><br>
+                <input type="radio" id="domanda2_v2" name="risposte_domanda2" value="2"><br>
+                <label for="checkbox2"> <strong> Poco <br> soddisfatto </strong> </label>
+              </div>
+              
+              <!-- Terzo valore-->
+              <div class="has-text-centered nome">
+                <span class="icon">
+                  <i class="fa-regular fa-4x fa-face-smile"></i>
+                </span><br><br>
+                <input type="radio" id="domanda2_v3" name="risposte_domanda2" value="3"><br>
+                <label for="checkbox3"> <strong>Abbastanza <br> soddisfatto </strong> </label>      
+              </div>
+              
+              <!-- Quarto valore-->
+              <div class="has-text-centered nome">
+                <span class="icon">                 
+                  <i class="fa-regular fa-face-laugh fa fa-4x"></i>
+                </span><br><br>
+                <input type="radio" id="domanda2_v4" name="risposte_domanda2" value="4"><br>
+                <label for="checkbox4"> <strong>Molto <br> soddisfatto</strong> </label>
+              </div>
+            </div>
+              
+            <!-- TESTO DELLA DOMANDA 3-->
+            <h3 th:text=${domanda3.testodomanda} class="title has-text-white has-text-centered"></h3>
+              <p hidden id = "domanda3"  th:text = ${domanda3.iddomanda} ></p>
+
+            <!-- div per una singola domanda-->
+            <div class="box is-5-mobile has-text-centered">  
+              
+              <!-- Primo valore-->
+              <div class="has-text-centered nome" id="primadomanda">              
+                <span class="icon">
+                  <i class="fa-regular fa-4x fa-face-frown"></i> 
+                </span><br><br>
+                <input type="radio" id="domanda3_v1" name="risposte_domanda3" value="1">
+                <label for="checkbox1"><br> <strong>Non <br> soddisfatto </strong> </label>
+              </div>
+                        
+              <!-- Secondo valore-->
+              <div class="has-text-centered nome">
+                <span class="icon">
+                  <i class="fa-regular fa-4x fa-face-meh"></i>
+                </span><br><br>
+                <input type="radio" id="domanda3_v2" name="risposte_domanda3" value="2"><br>
+                <label for="checkbox2"><strong>Poco <br> soddisfatto </strong>  </label>
+              </div>
+              
+              <!-- Terzo valore-->
+              <div class="has-text-centered nome">
+                <span class="icon">
+                  <i class="fa-regular fa-4x fa-face-smile"></i>
+                </span><br><br>
+                <input type="radio" id="domanda3_v3" name="risposte_domanda3" value="3"><br>
+                <label for="checkbox3"> <strong>Abbastanza <br> soddisfatto </strong> </label>      
+              </div>
+              
+              <!-- Quarto valore-->
+              <div class="has-text-centered nome">
+                <span class="icon">                 
+                  <i class="fa-regular fa-face-laugh fa fa-4x"></i>
+                </span><br><br>
+                <input type="radio" id="domanda3_v4" name="risposte_domanda3" value="3"><br>
+                <label for="checkbox4"> <strong>Molto <br> soddisfatto</strong> </label>
+              </div>
+            </div>  
+            
+             
+           <!-- Testo della DOMANDA 4-->
+           <h3 th:text=${domanda4.testodomanda} class="title has-text-white has-text-centered"></h3>
+           <p hidden id = "domanda4"  th:text = ${domanda4.iddomanda} ></p>
+
+         <!-- div per una singola domanda-->
+         <div class="box is-5-mobile has-text-centered">  
+           
+           <!-- Primo valore-->
+           <div class="has-text-centered nome" id="primadomanda">              
+             <span class="icon">
+              <i class="fa-regular fa-4x fa-face-frown"></i> 
+             </span><br><br>
+             <input type="radio" id="domanda4_v1" name="risposte_domanda4" value="1">
+             <label for="checkbox1"><br> <strong>Non <br> soddisfatto </strong></label>
+           </div>
+                     
+           <!-- Secondo valore-->
+           <div class="has-text-centered nome">
+             <span class="icon">
+               <i class="fa-regular fa-4x fa-face-meh"></i>
+             </span><br><br>
+             <input type="radio" id="domanda4_v2" name="risposte_domanda4" value="2"><br>
+             <label for="checkbox2"> <strong> Poco <br> soddisfatto </strong></label>
+           </div>
+           
+           <!-- Terzo valore-->
+           <div class="has-text-centered nome">
+             <span class="icon">
+               <i class="fa-regular fa-4x fa-face-smile"></i>
+             </span><br><br>
+             <input type="radio" id="domanda4_v3" name="risposte_domanda4" value="3"><br>
+             <label for="checkbox3"> <strong>Abbastanza <br> soddisfatto </strong> </label>      
+           </div>
+           
+           <!-- Quarto valore-->
+           <div class="has-text-centered nome">
+             <span class="icon">                 
+               <i class="fa-regular fa-face-laugh fa fa-4x"></i>
+             </span><br><br>
+             <input type="radio" id="domanda4_v4" name="risposte_domanda4" value="4"><br>
+             <label for="checkbox4"> <strong>Molto <br> soddisfatto</strong> </label>
+           </div>
+           
+         </div>
+         <!-- fine div per una domanda + risposta -->
+          <!--INVIO MODULO-->
+			 <br>
+      <button class="button has-background-light has-text-info is-medium is-responsive is-center has-text-centered" type="submit"  th:onclick = "invia_modulo()"> <strong> Invia risposte </strong> </button>
+          <br><br><br><br>
+        </div>
+      </div>
+    </div>
+  </section>
+
+      
+   <!-- Footer -->
+      <section class="hero is-light is-bold">
+        <div class="hero-body">
+          <div class="container has-text-centered">
+            <h4 class="title is-5 has-text-info">Registro Elettronico</h4>
+            <p>
+            by Cecilia Baccolo, Samira Boutabt, Francesco D'Alessandro, Mohamed Osman<br>
+             Emit Feltrinelli, 2022             
+          </p>
+          </div>
+        </div>
+      </section>
+      <script>
+        function invia_modulo(){
+              
+           //ID delle domande    
+   let iddomanda1 = document.getElementById("domanda1").innerHTML;
+   let iddomanda2 = document.getElementById("domanda2").innerHTML;
+   let iddomanda3 = document.getElementById("domanda3").innerHTML;
+   let iddomanda4 = document.getElementById("domanda4").innerHTML;
+   //lista valori
+   let lista_valori_domanda1 = [];
+   let lista_valori_domanda2 = [];
+   let lista_valori_domanda3 = [];
+   let lista_valori_domanda4 = [];
+   //prendo tutte le risposte divise per domanda
+   var risposte_domanda1 = document.getElementsByName('risposte_domanda1');
+   var risposte_domanda2 = document.getElementsByName('risposte_domanda2');
+   var risposte_domanda3 = document.getElementsByName('risposte_domanda3');
+   var risposte_domanda4 = document.getElementsByName('risposte_domanda4');
+   //controllo qual'è il valore selezionato per domanda
+   //valori domanda 1
+   for (var i=0; i<risposte_domanda1.length; i++) {
+       if (risposte_domanda1[i].checked) {
+         lista_valori_domanda1.push(risposte_domanda1[i].value);
+       }
+   }
+ //valori domanda 2
+   for (var i=0; i<risposte_domanda2.length; i++) {
+       if (risposte_domanda2[i].checked) {
+         lista_valori_domanda2.push(risposte_domanda2[i].value);
+       }
+   }
+ //valori domanda 3
+   for (var i=0; i<risposte_domanda3.length; i++) {
+       if (risposte_domanda3[i].checked) {
+         lista_valori_domanda3.push(risposte_domanda3[i].value);
+       }
+   }
+ //valori domanda 4
+   for (var i=0; i<risposte_domanda4.length; i++) {
+       if (risposte_domanda4[i].checked) {
+         lista_valori_domanda4.push(risposte_domanda4[i].value);
+       }
+   }
+  //controllo se tutte le domande hanno una risposta
+  if(lista_valori_domanda1.length != 0 && lista_valori_domanda2.length != 0 && lista_valori_domanda3.length != 0 && lista_valori_domanda4.length != 0 )
+  {
+    //chiamata ajax per inviare tutti i dati al controller
+              $.ajax({
+                    url:"/invio_modulo?iddomanda1="+iddomanda1+"&iddomanda2="+iddomanda2+"&iddomanda3="+iddomanda3+"&iddomanda4="+iddomanda4 
+                      +"&risposta1="+lista_valori_domanda1[0]+"&risposta2="+lista_valori_domanda2[0]
+                  +"&risposta3="+lista_valori_domanda3[0]+"&risposta4="+lista_valori_domanda4[0],
+                    type: "post",
+                    success:function(data){
+        window.location = "/ringraziamenti";
+                    }
+                });
+  }
+  else{
+    alert("E' obbligatorio rispondere a tutte le domande");
+  }
+        }
+                        
+</script>  
+</body>
+</html>
