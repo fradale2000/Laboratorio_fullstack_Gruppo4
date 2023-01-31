@@ -75,13 +75,10 @@ public class MainController {
 	public String post_registrazione(@Valid Utenti utenti, 
 									@RequestParam("email") String email, 
 									@RequestParam("pwd") String pwd, 
-									@RequestParam("g-recaptcha-response") String captchaResponse, 
+								
 									BindingResult fields) {	
 		
-		String url = "https://www.google.com/recaptcha/api/siteverify";
-		String params = "?secret=6LcmWycjAAAAAL_CPGuBMw7G9MzzVYRjOYGV0joE&response="+captchaResponse;		
-		ReCaptchaResponse reCaptchaResponse = restTemplate.exchange(url+params, HttpMethod.POST,null,ReCaptchaResponse.class).getBody();
-
+		
 		
 		String encryptedpassword;	
 		
@@ -157,13 +154,14 @@ public class MainController {
 	            /* Complete hashed password in hexadecimal format */  
 	            encryptedpassword = s.toString();  		         
 		        /*save user in db */
-	            
+	            //Per gli studenti
 				Utenti utenteAttuale = utenteRepository.login(email, encryptedpassword);				
 				if(utenteAttuale != null) {
 				session.setAttribute("utenteAttuale", utenteAttuale);				
-				LOGGER.info("Utente loggato"); 				
+				LOGGER.info("Studente loggato correttamente "); 				
 				return "redirect:/home/";
 				}
+				//Stessa roba di sopra ma per l'admin
 				if(utenteRepository.findByEmail(email).size()>0) {
 					// Lo studente è presente nel db			
 					Utenti adminLogin =utenteRepository.findByEmail(email).get(0);			
@@ -183,10 +181,10 @@ public class MainController {
 		catch (NoSuchAlgorithmException e) {  
 			e.printStackTrace();  
 			LOGGER.info("Login fallito");
-		return "redirect:/registrazione?error";
+		return "redirect:/login";
 		}
 		
-		return"registrazione";
+		return"redirect:/login";
 			
 			
 				
@@ -217,7 +215,7 @@ public class MainController {
 	    return "redirect:/login";  
 	}
 	
-	// ACCESSO HOME UTENTE
+	// Scadenza modulo
 	@RequestMapping(value = "home", method = RequestMethod.GET)
 	public String home(Model model,HttpSession session){
 		Utenti utenteAttuale = (Utenti) session.getAttribute("utenteAttuale");
@@ -405,7 +403,7 @@ public class MainController {
     
     
     
-    // INSERIMENTO STUDENTE
+    // MENU ADMIN
     
 	@RequestMapping(value = "menu_admin", method = RequestMethod.GET)
     public ModelAndView get_menu_admin(HttpSession session) {
