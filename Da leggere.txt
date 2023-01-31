@@ -1,0 +1,13 @@
+
+Buongiorno prof, abbiamo dovuto togliere la funzione del re-captcha perchè il link per attivarlo è scaduto e quindi non funzionava più. 
+Per il resto funziona tutto.
+
+Per entrare come admin le credenziali sono :
+admin@admin.it 
+psw: admin
+
+Se lo vuole testare al momento non ci sono alunni quindi dovrebbe prima entrare dall'admin aggiungere un nuovo studente e poi entrare.  
+
+Inoltre spero di aver zippato la cartella giusta da github col progetto. 
+
+Arrivederci
