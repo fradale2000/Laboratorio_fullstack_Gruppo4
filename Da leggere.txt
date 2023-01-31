@@ -8,6 +8,6 @@ psw: admin
 
 Se lo vuole testare al momento non ci sono alunni quindi dovrebbe prima entrare dall'admin aggiungere un nuovo studente e poi entrare.  
 
-Inoltre spero di aver zippato la cartella giusta da github col progetto. 
+ 
 
 Arrivederci
